@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 const About = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
+       {/* Header */}
       <section className="max-w-4xl text-center mb-12">
         <h1 className="text-4xl font-bold mb-6">About Our Company</h1>
         <p className="text-gray-700 text-lg">
