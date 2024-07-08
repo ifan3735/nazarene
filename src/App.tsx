@@ -16,6 +16,7 @@ import About from './pages/About';
 import ContactPage from './pages/ContactPage';
 import TermsOfService from './pages/TermsOfService';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import AdminLogin from './pages/AdminLogin'; // Add the import
 
 
 
@@ -32,6 +33,7 @@ const App = () => {
       <Route path="/terms" element={<TermsOfService />} />
       <Route path="/privacy" element={<PrivacyPolicy />} />
       <Route path="/admin" element={<AdminDashboard />} />
+      <Route path="/admin-login" element={<AdminLogin />} /> {/* Add the route */}
       <Route path="/admin/vehicles" element={<ManageVehicles />} />
       <Route path="/admin/users" element={<ManageUsers />} />
       <Route path="/admin/reports" element={<Reports />} />

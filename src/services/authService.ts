@@ -20,3 +20,13 @@ export const registerUser = async (user: Omit<User, 'id' | 'created_at' | 'updat
     return null;
   }
 };
+
+export const adminLogin = async (credentials: AuthCredentials): Promise<AuthResponse | null> => {
+  try {
+    const response = await axios.post<AuthResponse>('/api/auth/admin-login', credentials);
+    return response.data;
+  } catch (error) {
+    console.error('Admin login error:', error);
+    return null;
+  }
+};
