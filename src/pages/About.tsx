@@ -1,8 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const About = () => {
   return (
+    <div>
+      <Header />
     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
        {/* Header */}
       <section className="max-w-4xl text-center mb-12">
@@ -86,6 +90,8 @@ const About = () => {
           Contact Us
         </Link>
       </section>
+    </div>
+    <Footer />
     </div>
   );
 };

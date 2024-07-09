@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -25,6 +27,8 @@ const ContactPage = () => {
   };
 
   return (
+    <div>
+      <Header />
     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
       <section className="max-w-4xl text-center mb-12">
         <h1 className="text-4xl font-bold mb-6">Contact Us</h1>
@@ -99,6 +103,8 @@ const ContactPage = () => {
           Thank you for contacting us. We will get back to you soon!
         </div>
       )}
+    </div>
+    <Footer />
     </div>
   );
 };

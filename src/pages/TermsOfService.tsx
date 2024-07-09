@@ -1,7 +1,11 @@
 import React from 'react';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const TermsOfService = () => {
   return (
+    <div>
+      <Header />
     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
       <section className="max-w-4xl w-full bg-white shadow-md rounded p-8 mb-12">
         <h1 className="text-4xl font-bold mb-6 text-center">Terms of Service</h1>
@@ -76,6 +80,8 @@ const TermsOfService = () => {
           <p className="text-gray-700 mb-2">Address: 123 Main Street, Anytown, USA</p>
         </div>
       </section>
+    </div>
+    <Footer />
     </div>
   );
 };

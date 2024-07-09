@@ -30,3 +30,11 @@ export const adminLogin = async (credentials: AuthCredentials): Promise<AuthResp
     return null;
   }
 };
+
+export const logoutUser = async (): Promise<void> => {
+  try {
+    await axios.post('/api/auth/logout');
+  } catch (error) {
+    console.error('Logout error:', error);
+  }
+};

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { fetchVehicles, bookVehicle } from '../services/vehicleService';
 import { Vehicle } from '../types';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const VehicleBooking = () => {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
@@ -35,39 +37,45 @@ const VehicleBooking = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-200">
-      <h1 className="text-2xl font-bold mb-4">Book a Vehicle</h1>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
-      <form onSubmit={handleBooking} className="bg-white p-6 rounded shadow-md w-80">
-        <select
-          value={selectedVehicle}
-          onChange={(e) => setSelectedVehicle(e.target.value)}
-          className="block w-full p-2 mb-3 border rounded"
-          required
-        >
-          <option value="">Select Vehicle</option>
-          {vehicles.map(vehicle => (
-            <option key={vehicle.id} value={vehicle.id}>{vehicle.name}</option>
-          ))}
-        </select>
-        <input
-          type="date"
-          className="block w-full p-2 mb-3 border rounded"
-          value={bookingDate}
-          onChange={(e) => setBookingDate(e.target.value)}
-          required
-        />
-        <input
-          type="date"
-          className="block w-full p-2 mb-3 border rounded"
-          value={returnDate}
-          onChange={(e) => setReturnDate(e.target.value)}
-          required
-        />
-        <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
-          Book
-        </button>
-      </form>
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-1 bg-gray-200 flex items-center justify-center">
+        <div className="bg-white p-6 rounded shadow-md w-80">
+          <h1 className="text-2xl font-bold mb-4">Book a Vehicle</h1>
+          {error && <p className="text-red-500 mb-4">{error}</p>}
+          <form onSubmit={handleBooking}>
+            <select
+              value={selectedVehicle}
+              onChange={(e) => setSelectedVehicle(e.target.value)}
+              className="block w-full p-2 mb-3 border rounded"
+              required
+            >
+              <option value="">Select Vehicle</option>
+              {vehicles.map(vehicle => (
+                <option key={vehicle.id} value={vehicle.id}>{vehicle.name}</option>
+              ))}
+            </select>
+            <input
+              type="date"
+              className="block w-full p-2 mb-3 border rounded"
+              value={bookingDate}
+              onChange={(e) => setBookingDate(e.target.value)}
+              required
+            />
+            <input
+              type="date"
+              className="block w-full p-2 mb-3 border rounded"
+              value={returnDate}
+              onChange={(e) => setReturnDate(e.target.value)}
+              required
+            />
+            <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
+              Book
+            </button>
+          </form>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 };
