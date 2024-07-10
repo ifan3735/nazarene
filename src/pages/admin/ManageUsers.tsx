@@ -16,8 +16,16 @@ const ManageUsers: React.FC = () => {
 
   useEffect(() => {
     const loadUsers = async () => {
-      const response = await fetchUsers();
-      setUsers(response);
+      try {
+        const response = await fetchUsers();
+        if (Array.isArray(response)) {
+          setUsers(response);
+        } else {
+          console.error("Fetch users returned non-array data:", response);
+        }
+      } catch (error) {
+        console.error("Error loading users:", error);
+      }
     };
     loadUsers();
   }, []);
@@ -127,7 +135,7 @@ const ManageUsers: React.FC = () => {
         </div>
         <h2 className="text-xl font-semibold mb-2">Existing Users</h2>
         <ul>
-          {users.map(user => (
+          {users.map((user) => (
             <li key={user.id} className="flex justify-between items-center mb-2">
               <span>{user.full_name} - {user.email} ({user.role})</span>
               <div>

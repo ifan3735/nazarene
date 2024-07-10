@@ -1,4 +1,4 @@
-import axios from '../utils/axios';
+import axios from 'axios';
 import { User } from '../types';
 
 // Fetch all users

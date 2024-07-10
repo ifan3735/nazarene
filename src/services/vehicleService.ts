@@ -11,7 +11,7 @@ export const fetchVehicles = async (): Promise<Vehicle[]> => {
   }
 };
 
-export const bookVehicle = async (booking: any): Promise<void> => {
+export const bookVehicle = async (booking: Vehicle): Promise<void> => {
   try {
     await axios.post('/bookings', booking);
   } catch (error) {

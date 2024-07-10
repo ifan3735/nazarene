@@ -19,8 +19,6 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import AdminLogin from './pages/AdminLogin'; // Add the import
 
 
-
-
 const App = () => {
   return (
     <Routes>

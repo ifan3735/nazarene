@@ -1,8 +1,8 @@
 import axios from '../utils/axios';
-import { FleetManagement } from '../types';
+import { FleetManagements } from '../types';
 
 // Fetch all fleet details
-export const fetchFleet = async (): Promise<FleetManagement[]> => {
+export const fetchFleet = async (): Promise<FleetManagements[]> => {
   try {
     const response = await axios.get('/api/fleet');
     return response.data;
@@ -13,7 +13,7 @@ export const fetchFleet = async (): Promise<FleetManagement[]> => {
 };
 
 // Add a new vehicle to the fleet
-export const addFleetVehicle = async (vehicle: Omit<FleetManagement, 'id' | 'created_at' | 'updated_at'>): Promise<FleetManagement | null> => {
+export const addFleetVehicle = async (vehicle: Omit<FleetManagements, 'id' | 'created_at' | 'updated_at'>): Promise<FleetManagements | null> => {
   try {
     const response = await axios.post('/api/fleet', vehicle);
     return response.data;
@@ -24,7 +24,7 @@ export const addFleetVehicle = async (vehicle: Omit<FleetManagement, 'id' | 'cre
 };
 
 // Update an existing fleet vehicle
-export const updateFleetVehicle = async (id: number, vehicle: Omit<FleetManagement, 'id' | 'created_at' | 'updated_at'>): Promise<FleetManagement | null> => {
+export const updateFleetVehicle = async (id: number, vehicle: Omit<FleetManagements, 'id' | 'created_at' | 'updated_at'>): Promise<FleetManagements | null> => {
   try {
     const response = await axios.put(`/api/fleet/${id}`, vehicle);
     return response.data;
