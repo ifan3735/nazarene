@@ -9,8 +9,15 @@ const Logout = () => {
     // Clear user session data
     localStorage.removeItem('userRole');
     localStorage.removeItem('authToken');
-    // Redirect to login page
-    navigate('/login');
+
+    // Set a timeout to redirect after a few seconds
+    const timer = setTimeout(() => {
+      // Redirect to home page
+      navigate('/');
+    }, 2000); // Adjust the timeout duration as needed (2000ms = 2 seconds)
+
+    // Cleanup the timer if the component is unmounted
+    return () => clearTimeout(timer);
   }, [navigate]);
 
   return (

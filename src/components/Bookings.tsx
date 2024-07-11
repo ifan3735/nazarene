@@ -7,35 +7,35 @@ const bookingsData = [
     vehicle: 'Toyota Camry',
     price: '$50/day',
     details: 'Comfortable and reliable sedan with great fuel efficiency.',
-    image: 'https://i.pinimg.com/236x/28/4a/83/284a839a8e807a476c61dd77eb56cb71.jpg'
+    image: 'https://i.pinimg.com/474x/2c/9a/f2/2c9af260032522ed81e3c111f13b13ae.jpg'
   },
   {
     id: 2,
     vehicle: 'Honda Civic',
     price: '$45/day',
     details: 'Fuel-efficient and compact car, perfect for city driving.',
-    image: 'https://i.pinimg.com/236x/5c/b9/04/5cb9048f80b13be05bd382874f2e5a93.jpg'
+    image: 'https://i.pinimg.com/236x/69/df/93/69df93cfcc6a0321d0b00187a6511f12.jpg'
   },
     {
         id: 3,
         vehicle: 'Jeep Wrangler',
         price: '$80/day',
         details: 'Off-road capable and rugged SUV for outdoor adventures.',
-        image: 'https://i.pinimg.com/474x/78/7a/d4/787ad43e36ec9e2584638c45636fa043.jpg'
+        image: 'https://i.pinimg.com/474x/a5/25/15/a52515bbc8c05f0b6464a1c130a8828a.jpg'
     },
     {
         id: 4,
         vehicle: 'Ford F-150',
         price: '$70/day',
         details: 'Powerful and versatile pickup truck for work or play.',
-        image: 'https://i.pinimg.com/474x/76/90/40/769040bea0bde14efa0118b3973f1f1e.jpg'
+        image: 'https://i.pinimg.com/236x/ff/5c/8a/ff5c8a5b2d48da0ff87255e29e16de68.jpg'
     },
     {
         id: 5,
         vehicle: 'Toyota RAV4',
         price: '$60/day',
         details: 'Compact SUV with great fuel economy for road trips.',
-        image: 'https://i.pinimg.com/474x/68/39/44/6839446796e1d1cfdaee9aceace52145.jpg'
+        image: 'https://i.pinimg.com/236x/72/38/43/7238437b4de317aa2094076aa7a6bd98.jpg'
     },
     {
         id: 6,
@@ -49,42 +49,42 @@ const bookingsData = [
         vehicle: 'Chevrolet Suburban',
         price: '$90/day',
         details: 'Spacious and comfortable SUV for family trips.',
-        image: 'https://i.pinimg.com/236x/5f/ba/af/5fbaaf4d911c1d164e874a0a38094cb3.jpg'
+        image: 'https://i.pinimg.com/236x/78/df/7d/78df7d7431dd249060dad214611ae482.jpg'
     },
     {
         id: 8,
         vehicle: 'Ford Mustang',
         price: '$75/day',
         details: 'Iconic American muscle car with classic style and power.',
-        image: 'https://i.pinimg.com/474x/70/cf/48/70cf489d72a37dbe16f917d227821f07.jpg'
+        image: 'https://i.pinimg.com/236x/b7/ea/7e/b7ea7ed2c7f5d51e9d506ba4d22ac680.jpg'
     },
     {
         id: 9,
         vehicle: 'BMW X5',
         price: '$95/day',
         details: 'Luxury SUV with premium features and performance.',
-        image: 'https://i.pinimg.com/236x/93/a7/2c/93a72c41c047b20fdd12c89a2df8b80c.jpg'
+        image: 'https://i.pinimg.com/236x/76/01/b3/7601b3b5a4414688be8c1d1b0efb8998.jpg'
     },
     {
         id: 10,
         vehicle: 'Audi A4',
         price: '$85/day',
         details: 'Sophisticated and elegant sedan with advanced technology.',
-        image: 'https://i.pinimg.com/236x/95/f2/0e/95f20e297694ff6c46c8d77f4fae2452.jpg'
+        image: 'https://i.pinimg.com/236x/5c/7e/9d/5c7e9d53460217543a0ca6c87feacc85.jpg'
     },
     {
         id: 11,
         vehicle: 'Mercedes-Benz GLE',
         price: '$110/day',
         details: 'Premium SUV with luxurious design and performance.',
-        image: 'https://i.pinimg.com/236x/59/50/d5/5950d58a80778077b95a18da4da397aa.jpg'
+        image: 'https://i.pinimg.com/236x/22/fb/78/22fb7858f90a79c917a4a2efae786ce1.jpg'
     },
     {
         id: 12,
         vehicle: 'Porsche 911',
         price: '$150/day',
         details: 'Iconic sports car with precision engineering and speed.',
-        image: 'https://i.pinimg.com/474x/41/a3/1e/41a31e156b680b5be3f6e842e794a170.jpg'
+        image: 'https://i.pinimg.com/736x/42/12/0f/42120f99820ab4343939fcda0b2d16a9.jpg'
     }
   // Add more vehicle data as needed
 ];

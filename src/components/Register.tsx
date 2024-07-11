@@ -9,15 +9,18 @@ const Register = () => {
   const [registerUser] = useRegisterUserMutation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('');
+  const [name, setFullName] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await registerUser({ fullName, email, password });
-    // Simulate registration process
-    console.log('User registered:', { fullName, email, password });
-    navigate('/login');
+    try {
+      const result = await registerUser({ name, email, password });
+      console.log('User registered:', result);
+      navigate('/login');
+    } catch (error) {
+      console.error('Registration error:', error);
+    }
   };
 
   return (
@@ -34,7 +37,7 @@ const Register = () => {
               type="text"
               placeholder="Full Name"
               className="block w-full p-4 mb-4 border rounded text-lg"
-              value={fullName}
+              value={name}
               onChange={(e) => setFullName(e.target.value)}
               required
             />

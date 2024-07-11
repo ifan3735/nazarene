@@ -1,29 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiLogIn } from 'react-icons/fi';
-import { adminLogin } from '../services/authService'; // Adjust the import based on your actual service file
+import { FiLogIn } from 'react-icons/fi';// Adjust the import based on your actual service file
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useLoginUserMutation } from '../features/LoginAPI';
 
 const AdminLogin = () => {
+  const [adminLogin] = useLoginUserMutation();
   const [email, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const response = await adminLogin({ email, password });
-      if (response.token) {
-        localStorage.setItem('userRole', 'admin'); // Store user role as 'admin'
-        navigate('/admin-dashboard'); // Redirect to admin dashboard
-      } else {
-        setError('Invalid username or password');
-      }
-    } catch (err) {
-      setError('An error occurred during login');
+    const response = await adminLogin({ email, password });
+    if (response) {
+      navigate('/admin');
     }
   };
 

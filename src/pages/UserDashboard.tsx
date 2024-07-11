@@ -19,7 +19,7 @@ import Footer from '../components/Footer';
 import Logout from '../components/Logout';
 
 const UserDashboard = () => {
-  const user = useSelector((state: RootState) => state.user.user);
+  // const user = useSelector((state: RootState) => state.email);
   const [isLoading, setIsLoading] = useState(true);
   const [activeComponent, setActiveComponent] = useState('Dashboard');
   const [sectionLoading, setSectionLoading] = useState(false);

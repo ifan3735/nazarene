@@ -1,82 +1,75 @@
+// src/components/ManageUsers.tsx
 import React, { useState, useEffect } from 'react';
-import { fetchUsers, addUser, updateUser, deleteUser } from '../../services/userService';
+import { useFetchAllUsersQuery, useAddUserMutation, useUpdateUserMutation, useDeleteUserMutation } from '../../features/LoginAPI';
 import { User, UserRole } from '../../types';
 
 const ManageUsers: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]);
+  const { data: users, refetch } = useFetchAllUsersQuery();
+  console.log(users);
+  const [addUser] = useAddUserMutation();
+  const [updateUser] = useUpdateUserMutation();
+  const [deleteUser] = useDeleteUserMutation();
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [newUser, setNewUser] = useState<Omit<User, 'id' | 'created_at' | 'updated_at'>>({
-    full_name: '',
+    name: '',
     email: '',
     contact_phone: '',
     address: '',
-    role: 'user',
+    role: 'user' as UserRole,
   });
 
   useEffect(() => {
-    const loadUsers = async () => {
-      try {
-        const response = await fetchUsers();
-        if (Array.isArray(response)) {
-          setUsers(response);
-        } else {
-          console.error("Fetch users returned non-array data:", response);
-        }
-      } catch (error) {
-        console.error("Error loading users:", error);
-      }
-    };
-    loadUsers();
-  }, []);
+    refetch();
+  }, [refetch]);
 
   const handleAddUser = async () => {
-    const addedUser = await addUser(newUser);
+    const addedUser = await addUser(newUser).unwrap();
     if (addedUser) {
-      setUsers([...users, addedUser]);
       setNewUser({
-        full_name: '',
+        name: '',
         email: '',
         contact_phone: '',
         address: '',
-        role: 'user',
+        role: 'user' as UserRole,
       });
+      refetch();
     }
   };
 
   const handleEditUser = (user: User) => {
     setSelectedUser(user);
     setNewUser({
-      full_name: user.full_name,
+      name: user.name,
       email: user.email,
       contact_phone: user.contact_phone,
       address: user.address,
-      role: user.role,
+      role: user.role as UserRole,
     });
     setIsEditing(true);
   };
 
   const handleUpdateUser = async () => {
     if (selectedUser) {
-      const updated = await updateUser(selectedUser.id, newUser);
+      const updated = await updateUser({ id: selectedUser.id, user: newUser }).unwrap();
       if (updated) {
-        setUsers(users.map(user => (user.id === selectedUser.id ? { ...user, ...newUser } : user)));
         setSelectedUser(null);
         setNewUser({
-          full_name: '',
+          name: '',
           email: '',
           contact_phone: '',
           address: '',
-          role: 'user',
+          role: 'user' as UserRole,
         });
         setIsEditing(false);
+        refetch();
       }
     }
   };
 
   const handleDeleteUser = async (id: number) => {
-    await deleteUser(id);
-    setUsers(users.filter(user => user.id !== id));
+    await deleteUser(id).unwrap();
+    refetch();
   };
 
   return (
@@ -89,8 +82,8 @@ const ManageUsers: React.FC = () => {
             type="text"
             placeholder="Full Name"
             className="block w-full p-2 mb-3 border rounded"
-            value={newUser.full_name}
-            onChange={(e) => setNewUser({ ...newUser, full_name: e.target.value })}
+            value={newUser.name}
+            onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
             required
           />
           <input
@@ -134,27 +127,49 @@ const ManageUsers: React.FC = () => {
           </button>
         </div>
         <h2 className="text-xl font-semibold mb-2">Existing Users</h2>
-        <ul>
-          {users.map((user) => (
-            <li key={user.id} className="flex justify-between items-center mb-2">
-              <span>{user.full_name} - {user.email} ({user.role})</span>
-              <div>
-                <button
-                  className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 mr-2"
-                  onClick={() => handleEditUser(user)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                  onClick={() => handleDeleteUser(user.id)}
-                >
-                  Delete
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <table className="min-w-full bg-white border">
+          <thead>
+            <tr>
+              <th className="py-2 px-4 border-b">ID</th>
+              <th className="py-2 px-4 border-b">Name</th>
+              <th className="py-2 px-4 border-b">Email</th>
+              <th className="py-2 px-4 border-b">Contact Phone</th>
+              <th className="py-2 px-4 border-b">Address</th>
+              <th className="py-2 px-4 border-b">Role</th>
+              <th className="py-2 px-4 border-b">Created At</th>
+              <th className="py-2 px-4 border-b">Updated At</th>
+              <th className="py-2 px-4 border-b">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users?.map((user) => (
+              <tr key={user.id}>
+                <td className="py-2 px-4 border-b">{user.id}</td>
+                <td className="py-2 px-4 border-b">{user.name}</td>
+                <td className="py-2 px-4 border-b">{user.email}</td>
+                <td className="py-2 px-4 border-b">{user.contact_phone}</td>
+                <td className="py-2 px-4 border-b">{user.address}</td>
+                <td className="py-2 px-4 border-b">{user.role}</td>
+                <td className="py-2 px-4 border-b">{user.created_at}</td>
+                <td className="py-2 px-4 border-b">{user.updated_at}</td>
+                <td className="py-2 px-4 border-b">
+                  <button
+                    className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 mr-2"
+                    onClick={() => handleEditUser(user)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                    onClick={() => handleDeleteUser(user.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
