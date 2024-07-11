@@ -21,15 +21,15 @@ export interface AuthResponse {
   user: User;
 }
 
+// src/types.ts
 export interface Vehicle {
   id: number;
-  name: string;
-  model: string;
-  year: number;
-  availability: 'available' | 'booked';
+  vehicle_spec_id: number;
+  availability: string;
   created_at: string;
   updated_at: string;
 }
+
 
 // Additional types for other entities...
 import { Chart } from 'chart.js';

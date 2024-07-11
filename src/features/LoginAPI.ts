@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+
 export interface Details {
     name: string;
     email: string;
@@ -10,6 +11,11 @@ export interface User {
     email: string;
     role: string;
     token: string;
+}
+
+export interface Vehicle {
+    vehicle_spec_id: number;
+    availability: string;
 }
 
 export interface LoginResponse {
@@ -70,14 +76,41 @@ export const apiSlice = createApi({
                 body: user,
             }),
         }),
+        fetchAllVehicles: builder.query<Vehicle[], void>({
+            query: () => '/vehicles',
+        }),
+        updateVehicle: builder.mutation<Vehicle, { id: number; vehicle: Vehicle }>({
+            query: ({ id, vehicle }) => ({
+                url: `/vehicles/${id}`,
+                method: 'PUT',
+                body: vehicle,
+            }),
+        }),
+        addVehicle: builder.mutation<Vehicle, Vehicle>({
+            query: (vehicle) => ({
+                url: '/vehicles',
+                method: 'POST',
+                body: vehicle,
+            }),
+        }),
+        deleteVehicle: builder.mutation<void, number>({
+            query: (id) => ({
+                url: `/vehicles/${id}`,
+                method: 'DELETE',
+            }),
+        }),
     }),
 });
 
-export const { useLoginUserMutation, useRegisterUserMutation, useFetchAllUsersQuery, useUpdateUserMutation, useDeleteUserMutation, useAddUserMutation } = apiSlice as {
+export const { useLoginUserMutation, useRegisterUserMutation, useFetchAllUsersQuery, useUpdateUserMutation, useDeleteUserMutation, useAddUserMutation, useFetchAllVehiclesQuery, useAddVehicleMutation, useDeleteVehicleMutation, useUpdateVehicleMutation } = apiSlice as {
     useLoginUserMutation: () => ReturnType<typeof apiSlice.endpoints.loginUser.useMutation>;
     useRegisterUserMutation: () => ReturnType<typeof apiSlice.endpoints.registerUser.useMutation>;
     useFetchAllUsersQuery: () => ReturnType<typeof apiSlice.endpoints.fetchAllUsers.useQuery>;
     useUpdateUserMutation: () => ReturnType<typeof apiSlice.endpoints.updateUser.useMutation>;
     useDeleteUserMutation: () => ReturnType<typeof apiSlice.endpoints.deleteUser.useMutation>;
     useAddUserMutation: () => ReturnType<typeof apiSlice.endpoints.addUser.useMutation>;
+    useFetchAllVehiclesQuery: () => ReturnType<typeof apiSlice.endpoints.fetchAllVehicles.useQuery>;
+    useUpdateVehicleMutation: () => ReturnType<typeof apiSlice.endpoints.updateVehicle.useMutation>;
+    useAddVehicleMutation: () => ReturnType<typeof apiSlice.endpoints.addVehicle.useMutation>;
+    useDeleteVehicleMutation: () => ReturnType<typeof apiSlice.endpoints.deleteVehicle.useMutation>;
 };

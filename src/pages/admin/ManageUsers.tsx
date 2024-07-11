@@ -1,13 +1,20 @@
 // src/components/ManageUsers.tsx
-import React, { useState, useEffect } from 'react';
-import { useFetchAllUsersQuery, useAddUserMutation, useUpdateUserMutation, useDeleteUserMutation } from '../../features/LoginAPI';
+import React, { useState } from 'react';
+import {
+  useFetchAllUsersQuery,
+  useUpdateUserMutation,
+  useDeleteUserMutation,
+  useAddUserMutation
+} from '../../features/LoginAPI';
 import { User, UserRole } from '../../types';
 
 const ManageUsers: React.FC = () => {
-  const { data: users, refetch } = useFetchAllUsersQuery();
+  const { data: users = [], refetch } = useFetchAllUsersQuery();
   console.log(users);
   const [addUser] = useAddUserMutation();
+  console.log(addUser);
   const [updateUser] = useUpdateUserMutation();
+  console.log(updateUser);
   const [deleteUser] = useDeleteUserMutation();
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -19,21 +26,21 @@ const ManageUsers: React.FC = () => {
     role: 'user' as UserRole,
   });
 
-  useEffect(() => {
-    refetch();
-  }, [refetch]);
-
   const handleAddUser = async () => {
-    const addedUser = await addUser(newUser).unwrap();
-    if (addedUser) {
-      setNewUser({
-        name: '',
-        email: '',
-        contact_phone: '',
-        address: '',
-        role: 'user' as UserRole,
-      });
-      refetch();
+    try {
+      const addedUser = await addUser(newUser).unwrap();
+      if (addedUser) {
+        setNewUser({
+          name: '',
+          email: '',
+          contact_phone: '',
+          address: '',
+          role: 'user' as UserRole,
+        });
+        refetch(); // Optionally refetch data to get the latest from server
+      }
+    } catch (error) {
+      console.error('Error adding user:', error);
     }
   };
 
@@ -51,25 +58,33 @@ const ManageUsers: React.FC = () => {
 
   const handleUpdateUser = async () => {
     if (selectedUser) {
-      const updated = await updateUser({ id: selectedUser.id, user: newUser }).unwrap();
-      if (updated) {
-        setSelectedUser(null);
-        setNewUser({
-          name: '',
-          email: '',
-          contact_phone: '',
-          address: '',
-          role: 'user' as UserRole,
-        });
-        setIsEditing(false);
-        refetch();
+      try {
+        const updated = await updateUser({ id: selectedUser.id, user: newUser }).unwrap();
+        if (updated) {
+          setSelectedUser(null);
+          setNewUser({
+            name: '',
+            email: '',
+            contact_phone: '',
+            address: '',
+            role: 'user' as UserRole,
+          });
+          setIsEditing(false);
+          refetch(); // Optionally refetch data to get the latest from server
+        }
+      } catch (error) {
+        console.error('Error updating user:', error);
       }
     }
   };
 
   const handleDeleteUser = async (id: number) => {
-    await deleteUser(id).unwrap();
-    refetch();
+    try {
+      await deleteUser(id).unwrap();
+      refetch(); // Optionally refetch data to get the latest from server
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    }
   };
 
   return (
