@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { FiLogIn } from 'react-icons/fi';// Adjust the import based on your actual service file
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { useLoginUserMutation } from '../features/LoginAPI';
+import { useAdminLoginMutation } from '../features/LoginAPI';
 
 const AdminLogin = () => {
-  const [adminLogin] = useLoginUserMutation();
+  const [adminLogin] = useAdminLoginMutation();
   const [email, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -14,11 +14,19 @@ const AdminLogin = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    try{
     const response = await adminLogin({ email, password });
-    if (response) {
-      navigate('/admin');
+    if (response && response.data && response.data.email && response.data.token) {
+      localStorage.setItem('adminRole', response.data.role); // store the user role in localStorage
+      localStorage.setItem('authToken', response.data.token); // store the auth token in localStorage
+      navigate(response.data.role === 'admin' ? '/admin' : '/dashboard');
+    } else {
+      setError('Failed to login. Please check your credentials.');
     }
-  };
+  } catch (error) {
+    setError('Failed to login. Please check your credentials.');
+  }
+};
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-200">

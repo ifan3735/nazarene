@@ -102,9 +102,10 @@ export const apiSlice = createApi({
     }),
 });
 
-export const { useLoginUserMutation, useRegisterUserMutation, useFetchAllUsersQuery, useUpdateUserMutation, useDeleteUserMutation, useAddUserMutation, useFetchAllVehiclesQuery, useAddVehicleMutation, useDeleteVehicleMutation, useUpdateVehicleMutation } = apiSlice as {
+export const { useLoginUserMutation, useRegisterUserMutation,useAdminLoginMutation, useFetchAllUsersQuery, useUpdateUserMutation, useDeleteUserMutation, useAddUserMutation, useFetchAllVehiclesQuery, useAddVehicleMutation, useDeleteVehicleMutation, useUpdateVehicleMutation } = apiSlice as {
     useLoginUserMutation: () => ReturnType<typeof apiSlice.endpoints.loginUser.useMutation>;
     useRegisterUserMutation: () => ReturnType<typeof apiSlice.endpoints.registerUser.useMutation>;
+    useAdminLoginMutation: () => ReturnType<typeof apiSlice.endpoints.adminLogin.useMutation>;
     useFetchAllUsersQuery: () => ReturnType<typeof apiSlice.endpoints.fetchAllUsers.useQuery>;
     useUpdateUserMutation: () => ReturnType<typeof apiSlice.endpoints.updateUser.useMutation>;
     useDeleteUserMutation: () => ReturnType<typeof apiSlice.endpoints.deleteUser.useMutation>;
