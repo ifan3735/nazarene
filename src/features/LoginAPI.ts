@@ -18,6 +18,12 @@ export interface Vehicle {
     availability: string;
 }
 
+export interface Location {
+    name: string;
+    address: string;
+    contact_phone: string;
+}
+
 export interface LoginResponse {
   token: string;
 //   user: User;
@@ -99,10 +105,33 @@ export const apiSlice = createApi({
                 method: 'DELETE',
             }),
         }),
+        fetchAllLocations: builder.query<Location[], void>({
+            query: () => '/locations',
+        }),
+        updateLocation: builder.mutation<Location, { id: number; location: Location }>({
+            query: ({ id, location }) => ({
+                url: `/locations/${id}`,
+                method: 'PUT',
+                body: location,
+            }),
+        }),
+        addLocation: builder.mutation<Location, Location>({
+            query: (Location) => ({
+                url: '/locations',
+                method: 'POST',
+                body: Location,
+            }),
+        }),
+        deleteLocation: builder.mutation<void, number>({
+            query: (id) => ({
+                url: `/locations/${id}`,
+                method: 'DELETE',
+            }),
+        }),
     }),
 });
 
-export const { useLoginUserMutation, useRegisterUserMutation,useAdminLoginMutation, useFetchAllUsersQuery, useUpdateUserMutation, useDeleteUserMutation, useAddUserMutation, useFetchAllVehiclesQuery, useAddVehicleMutation, useDeleteVehicleMutation, useUpdateVehicleMutation } = apiSlice as {
+export const { useLoginUserMutation, useRegisterUserMutation,useAdminLoginMutation, useFetchAllUsersQuery, useUpdateUserMutation, useDeleteUserMutation, useAddUserMutation, useFetchAllVehiclesQuery, useAddVehicleMutation, useDeleteVehicleMutation, useUpdateVehicleMutation, useAddLocationMutation,useDeleteLocationMutation,useFetchAllLocationsQuery,useUpdateLocationMutation } = apiSlice as {
     useLoginUserMutation: () => ReturnType<typeof apiSlice.endpoints.loginUser.useMutation>;
     useRegisterUserMutation: () => ReturnType<typeof apiSlice.endpoints.registerUser.useMutation>;
     useAdminLoginMutation: () => ReturnType<typeof apiSlice.endpoints.adminLogin.useMutation>;
@@ -114,4 +143,8 @@ export const { useLoginUserMutation, useRegisterUserMutation,useAdminLoginMutati
     useUpdateVehicleMutation: () => ReturnType<typeof apiSlice.endpoints.updateVehicle.useMutation>;
     useAddVehicleMutation: () => ReturnType<typeof apiSlice.endpoints.addVehicle.useMutation>;
     useDeleteVehicleMutation: () => ReturnType<typeof apiSlice.endpoints.deleteVehicle.useMutation>;
+    useFetchAllLocationsQuery: () => ReturnType<typeof apiSlice.endpoints.fetchAllLocations.useQuery>;
+    useUpdateLocationMutation: () => ReturnType<typeof apiSlice.endpoints.updateLocation.useMutation>;
+    useAddLocationMutation: () => ReturnType<typeof apiSlice.endpoints.addLocation.useMutation>;
+    useDeleteLocationMutation: () => ReturnType<typeof apiSlice.endpoints.deleteLocation.useMutation>;
 };

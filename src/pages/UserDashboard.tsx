@@ -1,9 +1,7 @@
 // src/components/UserDashboard.tsx
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store';
-import Loader from '../components/Loader';
 import { TailSpin } from 'react-loader-spinner';
+import Loader from '../components/Loader';
 import Dashboard from '../components/Dashboard';
 import Discover from '../components/Discover';
 import Calendar from '../components/Calender';
@@ -19,7 +17,6 @@ import Footer from '../components/Footer';
 import Logout from '../components/Logout';
 
 const UserDashboard = () => {
-  // const user = useSelector((state: RootState) => state.email);
   const [isLoading, setIsLoading] = useState(true);
   const [activeComponent, setActiveComponent] = useState('Dashboard');
   const [sectionLoading, setSectionLoading] = useState(false);
@@ -81,55 +78,53 @@ const UserDashboard = () => {
   };
 
   const navLinks = [
-    { id: 'Dashboard', label: 'Dashboard' },
-    { id: 'Discover', label: 'Discover' },
-    { id: 'Calendar', label: 'Calendar' },
-    { id: 'Saved', label: 'Saved' },
-    { id: 'Inbox', label: 'Inbox' },
-    { id: 'Transactions', label: 'Transactions' },
-    { id: 'CarReports', label: 'Car Reports' },
-    { id: 'SellYourCar', label: 'Sell Your Car' },
-    { id: 'Settings', label: 'Settings' },
-    { id: 'Bookings', label: 'Bookings' },
+    { id: 'Dashboard', label: 'Dashboard', icon: '🏠' },
+    { id: 'Discover', label: 'Discover', icon: '🔍' },
+    { id: 'Calendar', label: 'Calendar', icon: '📅' },
+    { id: 'Saved', label: 'Saved', icon: '💾' },
+    { id: 'Inbox', label: 'Inbox', icon: '📥' },
+    { id: 'Transactions', label: 'Transactions', icon: '💸' },
+    { id: 'CarReports', label: 'Car Reports', icon: '🚗' },
+    { id: 'SellYourCar', label: 'Sell Your Car', icon: '🚙' },
+    { id: 'Settings', label: 'Settings', icon: '⚙️' },
+    { id: 'Bookings', label: 'Bookings', icon: '📖' },
   ];
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
-      <div className="min-h-screen bg-gray-300 py-6 sm:py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-          <div className="flex">
-            {/* Sidebar */}
-            <div className="w-1/4 bg-white border-r border-gray-200 p-4">
-              <div className="mb-4">
-                <img src="https://i.pinimg.com/236x/0a/e7/16/0ae7168109df3688316c8bfd361ccbfb.jpg" alt="Logo" className="h-20 w-20 mx-auto" />
-              </div>
-              <nav className="flex flex-col">
-                {navLinks.map(link => (
-                  <button
-                    key={link.id}
-                    onClick={() => handleNavigation(link.id)}
-                    className={`py-2 px-4 mb-2 rounded-lg ${
-                      activeComponent === link.id ? 'bg-purple-100 text-purple-600' : 'text-gray-600'
-                    }`}
-                  >
-                    {link.label}
-                  </button>
-                ))}
-                <button
-                  onClick={() => handleNavigation('Logout')}
-                  className="py-2 px-4 mt-auto bg-red-500 hover:bg-red-600 text-white rounded-lg"
-                >
-                  Logout
-                </button>
-              </nav>
-            </div>
-
-            {/* Main Content */}
-            <div className="w-3/4 p-6">
-              {renderComponent()}
-            </div>
+      <div className="flex flex-1">
+        {/* Sidebar */}
+        <div className="w-1/4 bg-white border-r border-gray-200 p-4 flex flex-col">
+          <div className="text-center mb-4">
+            <img src="https://i.pinimg.com/236x/0a/e7/16/0ae7168109df3688316c8bfd361ccbfb.jpg" alt="Logo" className="h-24 w-24 mx-auto rounded-full" />
+            <h2 className="text-xl font-semibold mt-2">User Dashboard</h2>
           </div>
+          <nav className="flex flex-col mt-6 space-y-2">
+            {navLinks.map(link => (
+              <button
+                key={link.id}
+                onClick={() => handleNavigation(link.id)}
+                className={`flex items-center py-2 px-4 rounded-lg ${
+                  activeComponent === link.id ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                <span className="mr-2">{link.icon}</span>
+                {link.label}
+              </button>
+            ))}
+            <button
+              onClick={() => handleNavigation('Logout')}
+              className="flex items-center py-2 px-4 mt-auto bg-red-500 hover:bg-red-600 text-white rounded-lg"
+            >
+              <span className="mr-2">🚪</span>Logout
+            </button>
+          </nav>
+        </div>
+
+        {/* Main Content */}
+        <div className="w-3/4 p-6 bg-gray-50">
+          {renderComponent()}
         </div>
       </div>
       <Footer />

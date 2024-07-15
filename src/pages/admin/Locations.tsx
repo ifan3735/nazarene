@@ -1,30 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import { fetchLocations, addLocation, updateLocation, deleteLocation } from '../../services/locationService';
+import React, { useState } from 'react';
+import { 
+  useFetchAllLocationsQuery, 
+  useAddLocationMutation, 
+  useDeleteLocationMutation, 
+  useUpdateLocationMutation 
+} from '../../features/LoginAPI';
 import { Location } from '../../types';
 
 const Locations: React.FC = () => {
-  const [locations, setLocations] = useState<Location[]>([]);
+  const { data: locations = [], refetch } = useFetchAllLocationsQuery();
+  const [addLocation] = useAddLocationMutation();
+  const [updateLocation] = useUpdateLocationMutation();
+  const [deleteLocation] = useDeleteLocationMutation();
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [newLocation, setNewLocation] = useState<Omit<Location, 'id' | 'created_at' | 'updated_at'>>({
     name: '',
     address: '',
-    contact_phone: ''
+    contact_phone: '',
   });
-  const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-
-  useEffect(() => {
-    const loadLocations = async () => {
-      const response = await fetchLocations();
-      setLocations(response);
-    };
-    loadLocations();
-  }, []);
 
   const handleAddLocation = async () => {
-    const added = await addLocation(newLocation);
-    if (added) {
-      setLocations([...locations, added]);
-      setNewLocation({ name: '', address: '', contact_phone: '' });
+    if (!newLocation.name || !newLocation.address || !newLocation.contact_phone) {
+      alert('Please fill out all fields.');
+      return;
+    }
+
+    try {
+      const addedLocation = await addLocation(newLocation).unwrap();
+      if (addedLocation) {
+        setNewLocation({
+          name: '',
+          address: '',
+          contact_phone: '',
+        });
+        refetch();
+      }
+    } catch (error) {
+      console.error('Error adding location:', error);
     }
   };
 
@@ -33,26 +46,43 @@ const Locations: React.FC = () => {
     setNewLocation({
       name: location.name,
       address: location.address,
-      contact_phone: location.contact_phone
+      contact_phone: location.contact_phone,
     });
     setIsEditing(true);
   };
 
   const handleUpdateLocation = async () => {
     if (selectedLocation) {
-      const updated = await updateLocation(selectedLocation.id, newLocation);
-      if (updated) {
-        setLocations(locations.map(loc => (loc.id === selectedLocation.id ? { ...loc, ...newLocation } : loc)));
-        setSelectedLocation(null);
-        setNewLocation({ name: '', address: '', contact_phone: '' });
-        setIsEditing(false);
+      if (!newLocation.name || !newLocation.address || !newLocation.contact_phone) {
+        alert('Please fill out all fields.');
+        return;
+      }
+
+      try {
+        const updatedLocation = await updateLocation({ id: selectedLocation.id, location: newLocation }).unwrap();  
+        if (updatedLocation) {
+          setNewLocation({
+            name: '',
+            address: '',
+            contact_phone: '',
+          });
+          setSelectedLocation(null);
+          setIsEditing(false);
+          refetch();
+        }
+      } catch (error) {
+        console.error('Error updating location:', error);
       }
     }
   };
 
   const handleDeleteLocation = async (id: number) => {
-    await deleteLocation(id);
-    setLocations(locations.filter(loc => loc.id !== id));
+    try {
+      await deleteLocation(id).unwrap();
+      refetch();
+    } catch (error) {
+      console.error('Error deleting location:', error);
+    }
   };
 
   return (
@@ -93,27 +123,45 @@ const Locations: React.FC = () => {
           </button>
         </div>
         <h2 className="text-xl font-semibold mb-2">Existing Locations</h2>
-        <ul>
-          {locations.map(location => (
-            <li key={location.id} className="flex justify-between items-center mb-2">
-              <span>{location.name} - {location.address} ({location.contact_phone})</span>
-              <div>
-                <button
-                  className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 mr-2"
-                  onClick={() => handleEditLocation(location)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                  onClick={() => handleDeleteLocation(location.id)}
-                >
-                  Delete
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <table className="min-w-full bg-white border border-gray-300">
+          <thead>
+            <tr>
+              <th className="py-2 px-4 border-b">ID</th>
+              <th className="py-2 px-4 border-b">Name</th>
+              <th className="py-2 px-4 border-b">Address</th>
+              <th className="py-2 px-4 border-b">Contact Phone</th>
+              <th className="py-2 px-4 border-b">Created At</th>
+              <th className="py-2 px-4 border-b">Updated At</th>
+              <th className="py-2 px-4 border-b">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {locations.map((location) => (
+              <tr key={location.id}>
+                <td className="py-2 px-4 border-b">{location.id}</td>
+                <td className="py-2 px-4 border-b">{location.name}</td>
+                <td className="py-2 px-4 border-b">{location.address}</td>
+                <td className="py-2 px-4 border-b">{location.contact_phone}</td>
+                <td className="py-2 px-4 border-b">{location.created_at}</td>
+                <td className="py-2 px-4 border-b">{location.updated_at}</td>
+                <td className="py-2 px-4 border-b">
+                  <button
+                    className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 mr-2"
+                    onClick={() => handleEditLocation(location)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                    onClick={() => handleDeleteLocation(location.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
