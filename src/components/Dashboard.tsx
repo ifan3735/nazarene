@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Line } from 'react-chartjs-2';
+import { useNavigate } from 'react-router-dom';
+import UserContext from '../contexts/UserContext';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const { user } = useContext(UserContext);
+
   const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July, August, September, October, November, December'],
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     datasets: [
       {
         label: 'Turnover',
@@ -24,11 +29,15 @@ const Dashboard = () => {
     },
   };
 
+  const handleBookCarClick = () => {
+    navigate('/bookings');
+  };
+
   return (
     <div>
       {/* User Greeting */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">Welcome Back, Olivia!</h1>
+        <h1 className="text-3xl font-bold text-gray-800">Welcome Back, {user.name}!</h1>
         <p className="text-gray-600">Here’s what’s happening with your account today.</p>
       </div>
 
@@ -113,7 +122,7 @@ const Dashboard = () => {
       <div className="bg-white p-6 rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">Quick Actions</h2>
         <div className="flex space-x-4">
-          <button className="bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700">Book a Car</button>
+          <button className="bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700" onClick={handleBookCarClick}>Book a Car</button>
           <button className="bg-gray-200 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-300">View Reports</button>
         </div>
       </div>

@@ -1,15 +1,17 @@
 // src/components/Login.tsx
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useLoginUserMutation } from '../features/LoginAPI';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
+import UserContext from '../contexts/UserContext';
 
 const Login = () => {
   const [loginUser, { isLoading, isError }] = useLoginUserMutation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,6 +21,7 @@ const Login = () => {
       if (response && response.email && response.token) {
         localStorage.setItem('userRole', response.role); // store the user role in localStorage
         localStorage.setItem('authToken', response.token); // store the auth token in localStorage
+        setUser({ name: response.email, role: response.role }); // Update the user context
         navigate(response.role === 'admin' ? '/admin' : '/dashboard');
       } else {
         console.error('Unexpected response structure:', response);

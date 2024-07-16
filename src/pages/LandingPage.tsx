@@ -7,15 +7,15 @@ const LandingPage = () => {
       {/* Header */}
       <header className="bg-white shadow-md p-4 flex justify-between items-center w-full top-0 z-10">
         <div className="flex items-center">
-        <div className="h-20 w-20 bg-cover bg-center mr-2" style={{ backgroundImage: 'url("https://i.pinimg.com/236x/0a/e7/16/0ae7168109df3688316c8bfd361ccbfb.jpg")' }}></div>
-          <div className="text-3xl font-bold">Nazarene Vehicle Rental</div>
+          <div className="h-20 w-20 bg-cover bg-center mr-2 rounded-full border-2 border-blue-500" style={{ backgroundImage: 'url("https://i.pinimg.com/236x/0a/e7/16/0ae7168109df3688316c8bfd361ccbfb.jpg")' }}></div>
+          <div className="text-3xl font-bold text-blue-500">Nazarene Vehicle Rental</div>
         </div>
         <nav className="flex items-center">
-          <Link to="/" className="text-blue-500 hover:underline mx-2">Home</Link>
-          <Link to="/about" className="text-blue-500 hover:underline mx-2">About</Link>
-          <Link to="/contact" className="text-blue-500 hover:underline mx-2">Contact</Link>
-          <Link to="/terms" className="text-blue-500 hover:underline mx-2">Terms</Link>
-          <Link to="/privacy" className="text-blue-500 hover:underline mx-2">Privacy</Link>
+          <Link to="/" className="text-gray-700 hover:text-blue-500 mx-2">Home</Link>
+          <Link to="/about" className="text-gray-700 hover:text-blue-500 mx-2">About</Link>
+          <Link to="/contact" className="text-gray-700 hover:text-blue-500 mx-2">Contact</Link>
+          <Link to="/terms" className="text-gray-700 hover:text-blue-500 mx-2">Terms</Link>
+          <Link to="/privacy" className="text-gray-700 hover:text-blue-500 mx-2">Privacy</Link>
           <Link to="/register" className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 mx-2">Register</Link>
         </nav>
       </header>
@@ -34,7 +34,7 @@ const LandingPage = () => {
           <div className="relative z-10 p-4">
             <h1 className="text-5xl font-bold mb-4">Welcome to Nazarene Vehicle Rental</h1>
             <p className="text-xl mb-8">Rent vehicles easily and manage your bookings with us.</p>
-            <Link to="/booking" className="bg-white text-blue-600 py-2 px-4 rounded font-bold hover:bg-gray-200">Book a Vehicle</Link>
+            <Link to="/booking" className="bg-blue-500 text-white py-2 px-6 rounded font-bold hover:bg-blue-600">Book a Vehicle</Link>
           </div>
         </section>
 
@@ -56,50 +56,26 @@ const LandingPage = () => {
         </section>
 
         {/* Featured Vehicles */}
-        <section className="p-8 bg-gray-200">
+        <section className="p-8 bg-gray-100">
           <h2 className="text-3xl font-bold text-center mb-6">Featured Vehicles</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {/* Replace with your featured vehicles data */}
-            <div className="bg-white p-4 rounded shadow-md">
-              <img src="https://i.pinimg.com/236x/28/4a/83/284a839a8e807a476c61dd77eb56cb71.jpg" alt="Toyota Camry" className="w-full h-48 object-cover rounded-md mb-4" />
-              <h3 className="text-xl font-semibold">Toyota Camry</h3>
-              <p className="text-gray-600">Comfortable and reliable sedan.</p>
-            </div>
-            <div className="bg-white p-4 rounded shadow-md">
-              <img src="https://i.pinimg.com/236x/21/45/9e/21459e2d2d426235204a9ae1b1e59e80.jpg" alt="Ford Explorer" className="w-full h-48 object-cover rounded-md mb-4" />
-              <h3 className="text-xl font-semibold">Ford Explorer</h3>
-              <p className="text-gray-600">Spacious and powerful SUV.</p>
-            </div>
-            <div className="bg-white p-4 rounded shadow-md">
-              <img src="https://i.pinimg.com/236x/5c/b9/04/5cb9048f80b13be05bd382874f2e5a93.jpg" alt="Honda Civic" className="w-full h-48 object-cover rounded-md mb-4" />
-              <h3 className="text-xl font-semibold">Honda Civic</h3>
-              <p className="text-gray-600">Fuel-efficient and compact car.</p>
-            </div>
-            <div className="bg-white p-4 rounded shadow-md">
-              <img src="https://i.pinimg.com/236x/1f/5a/e0/1f5ae0bbe38816370f21dfb86412d7c2.jpg" alt="Chevrolet Tahoe" className="w-full h-48 object-cover rounded-md mb-4" />
-              <h3 className="text-xl font-semibold">Chevrolet Tahoe</h3>
-              <p className="text-gray-600">Full-size SUV with great performance.</p>
-            </div>
-            <div className="bg-white p-4 rounded shadow-md">
-              <img src="https://i.pinimg.com/474x/78/7a/d4/787ad43e36ec9e2584638c45636fa043.jpg" alt="Jeep Wrangler" className="w-full h-48 object-cover rounded-md mb-4" />
-              <h3 className="text-xl font-semibold">Jeep Wrangler</h3>
-              <p className="text-gray-600">Off-road capable and rugged SUV.</p>
-            </div>
-            <div className="bg-white p-4 rounded shadow-md">
-              <img src="https://i.pinimg.com/474x/5a/e7/9e/5ae79efba7f9aca7efdff1b079bf1ef7.jpg" alt="Nissan Altima" className="w-full h-48 object-cover rounded-md mb-4" />
-              <h3 className="text-xl font-semibold">Nissan Altima</h3>
-              <p className="text-gray-600">Reliable and stylish sedan.</p>
-            </div>
-            <div className="bg-white p-4 rounded shadow-md">
-              <img src="https://i.pinimg.com/474x/76/90/40/769040bea0bde14efa0118b3973f1f1e.jpg" alt="Ford F-150" className="w-full h-48 object-cover rounded-md mb-4" />
-              <h3 className="text-xl font-semibold">Ford F-150</h3>
-              <p className="text-gray-600">Powerful and versatile pickup truck.</p>
-            </div>
-            <div className="bg-white p-4 rounded shadow-md">
-              <img src="https://i.pinimg.com/474x/68/39/44/6839446796e1d1cfdaee9aceace52145.jpg" alt="Toyota RAV4" className="w-full h-48 object-cover rounded-md mb-4" />
-              <h3 className="text-xl font-semibold">Toyota RAV4</h3>
-              <p className="text-gray-600">Compact SUV with great fuel economy.</p>
-            </div>
+            {[
+              { img: "https://i.pinimg.com/236x/28/4a/83/284a839a8e807a476c61dd77eb56cb71.jpg", name: "Toyota Camry", desc: "Comfortable and reliable sedan." },
+              { img: "https://i.pinimg.com/236x/21/45/9e/21459e2d2d426235204a9ae1b1e59e80.jpg", name: "Ford Explorer", desc: "Spacious and powerful SUV." },
+              { img: "https://i.pinimg.com/236x/5c/b9/04/5cb9048f80b13be05bd382874f2e5a93.jpg", name: "Honda Civic", desc: "Fuel-efficient and compact car." },
+              { img: "https://i.pinimg.com/236x/1f/5a/e0/1f5ae0bbe38816370f21dfb86412d7c2.jpg", name: "Chevrolet Tahoe", desc: "Full-size SUV with great performance." },
+              { img: "https://i.pinimg.com/474x/78/7a/d4/787ad43e36ec9e2584638c45636fa043.jpg", name: "Jeep Wrangler", desc: "Off-road capable and rugged SUV." },
+              { img: "https://i.pinimg.com/474x/5a/e7/9e/5ae79efba7f9aca7efdff1b079bf1ef7.jpg", name: "Nissan Altima", desc: "Reliable and stylish sedan." },
+              { img: "https://i.pinimg.com/474x/76/90/40/769040bea0bde14efa0118b3973f1f1e.jpg", name: "Ford F-150", desc: "Powerful and versatile pickup truck." },
+              { img: "https://i.pinimg.com/474x/68/39/44/6839446796e1d1cfdaee9aceace52145.jpg", name: "Toyota RAV4", desc: "Compact SUV with great fuel economy." },
+            ].map(vehicle => (
+              <div key={vehicle.name} className="bg-white p-4 rounded shadow-md">
+                <img src={vehicle.img} alt={vehicle.name} className="w-full h-48 object-cover rounded-md mb-4" />
+                <h3 className="text-xl font-semibold">{vehicle.name}</h3>
+                <p className="text-gray-600">{vehicle.desc}</p>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -121,38 +97,38 @@ const LandingPage = () => {
             <Link to="/about" className="text-blue-300 hover:underline mt-4 block">Learn more</Link>
           </div>
         </section>
-
-        {/* Footer */}
-        <footer className="bg-gray-800 text-white py-6">
-          <div className="container mx-auto flex flex-col items-center justify-center px-4">
-            {/* Copyright and Links */}
-            <div className="text-center mb-4">
-              <p className="text-sm">&copy; {new Date().getFullYear()} Nazarene Vehicle Rental. All rights reserved.</p>
-              <nav className="mt-2">
-                <Link to="/contact" className="text-blue-400 hover:underline mx-2">Contact Us</Link>
-                <Link to="/terms" className="text-blue-400 hover:underline mx-2">Terms of Service</Link>
-                <Link to="/privacy" className="text-blue-400 hover:underline mx-2">Privacy Policy</Link>
-              </nav>
-            </div>
-
-            {/* Social Media Links */}
-            <div className="flex justify-center space-x-6 mt-4">
-              <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-white transition duration-300">
-                <i className="fab fa-facebook-f text-2xl"></i>
-              </a>
-              <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-white transition duration-300">
-                <i className="fab fa-twitter text-2xl"></i>
-              </a>
-              <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="text-pink-500 hover:text-white transition duration-300">
-                <i className="fab fa-instagram text-2xl"></i>
-              </a>
-              <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:text-white transition duration-300">
-                <i className="fab fa-linkedin-in text-2xl"></i>
-              </a>
-            </div>
-          </div>
-        </footer>
       </div>
+
+      {/* Footer */}
+      <footer className="bg-gray-800 text-white py-6">
+        <div className="container mx-auto flex flex-col items-center justify-center px-4">
+          {/* Copyright and Links */}
+          <div className="text-center mb-4">
+            <p className="text-sm">&copy; {new Date().getFullYear()} Nazarene Vehicle Rental. All rights reserved.</p>
+            <nav className="mt-2">
+              <Link to="/contact" className="text-blue-400 hover:underline mx-2">Contact Us</Link>
+              <Link to="/terms" className="text-blue-400 hover:underline mx-2">Terms of Service</Link>
+              <Link to="/privacy" className="text-blue-400 hover:underline mx-2">Privacy Policy</Link>
+            </nav>
+          </div>
+
+          {/* Social Media Links */}
+          <div className="flex justify-center space-x-6 mt-4">
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-white transition duration-300">
+              <i className="fab fa-facebook-f text-2xl"></i>
+            </a>
+            <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-white transition duration-300">
+              <i className="fab fa-twitter text-2xl"></i>
+            </a>
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="text-pink-500 hover:text-white transition duration-300">
+              <i className="fab fa-instagram text-2xl"></i>
+            </a>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:text-white transition duration-300">
+              <i className="fab fa-linkedin-in text-2xl"></i>
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
