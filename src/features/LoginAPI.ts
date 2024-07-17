@@ -8,9 +8,22 @@ export interface Details {
 }
 
 export interface User {
+    id: number;
     email: string;
     role: string;
     token: string;
+}
+
+export interface User2 {   
+    id: number;
+    name: string;
+    email: string;
+}
+
+export interface User3 {
+    id: number;
+    currentPassword: string;
+    newPassword: string;
 }
 
 export interface Vehicle {
@@ -41,6 +54,7 @@ export interface Fleet {
 }
 
 export interface LoginResponse {
+    id: number;
   token: string;
 //   user: User;
 email: string;
@@ -51,12 +65,20 @@ export interface RegisterResponse {
 }
 
 export interface Id {
-    id: string;
+    id: number;
 }
 
 export const apiSlice = createApi({
     reducerPath: 'api',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000',
+    prepareHeaders: (headers) => {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            headers.set('authorization', `Bearer ${token}`);
+        }
+        return headers;
+    }
+     }),
     endpoints: (builder) => ({
         loginUser: builder.mutation<LoginResponse, { email: string; password: string }>({
             query: (credentials) => ({
@@ -82,9 +104,12 @@ export const apiSlice = createApi({
         fetchAllUsers: builder.query<User[], void>({
             query: () => '/users',
         }),
-        updateUser: builder.mutation<User, { id: number; user: User }>({
-            query: ({ id, ...user }) => ({
-                url: `/users/${id}`,
+        fetchOneUser: builder.query<User2, number>({
+            query: (id) => `/users/${id}`,
+        }),
+        updateUser: builder.mutation ({
+            query: ( user ) => ({
+                url: `/users/${user.id}`,
                 method: 'PUT',
                 body: user,
             }),
@@ -204,9 +229,9 @@ export const apiSlice = createApi({
                 body: Id,
             }),
         }),
-        updateUserPassword: builder.mutation<User, User>({
+        updateUserPassword: builder.mutation<User3, User3>({
             query: (user) => ({
-                url: '/api/user/password',
+                url: `user${user.id}`,
                 method: 'PUT',
                 body: user,
             }),
@@ -246,7 +271,7 @@ export const { useLoginUserMutation, useRegisterUserMutation,
     useFetchAllSupportTicketsQuery, useDeleteSupportTicketMutation,
     useUpdateSupportTicketMutation, useAddFleetMutation,
     useDeleteFleetMutation, useFetchAllFleetQuery, 
-    useUpdateFleetMutation, } = apiSlice as {
+    useUpdateFleetMutation, useFetchOneUserQuery, useUpdateUserPasswordMutation, useSetNotificationsMutation } = apiSlice as {
     useLoginUserMutation: () => ReturnType<typeof apiSlice.endpoints.loginUser.useMutation>;
     useRegisterUserMutation: () => ReturnType<typeof apiSlice.endpoints.registerUser.useMutation>;
     useAdminLoginMutation: () => ReturnType<typeof apiSlice.endpoints.adminLogin.useMutation>;
@@ -270,10 +295,11 @@ export const { useLoginUserMutation, useRegisterUserMutation,
     useAddFleetMutation: () => ReturnType<typeof apiSlice.endpoints.addFleet.useMutation>;
     useDeleteFleetMutation: () => ReturnType<typeof apiSlice.endpoints.deleteFleet.useMutation>;
     useUpdateFleetMutation: () => ReturnType<typeof apiSlice.endpoints.updateFleet.useMutation>;
+    useFetchOneUserQuery: (id: number) => ReturnType<typeof apiSlice.endpoints.fetchOneUser.useQuery>;
     // useFetchUserProfileQuery: () => ReturnType<typeof apiSlice.endpoints.fetchUserProfile.useQuery>;
     // useUpdateUserProfileMutation: () => ReturnType<typeof apiSlice.endpoints.updateUserProfile.useMutation>;
-    // useUpdateUserPasswordMutation: () => ReturnType<typeof apiSlice.endpoints.updateUserPassword.useMutation>;
+    useUpdateUserPasswordMutation: () => ReturnType<typeof apiSlice.endpoints.updateUserPassword.useMutation>;
     // useSetProfileMutation: () => ReturnType<typeof apiSlice.endpoints.setProfile.useMutation>;
     // useSetPasswordMutation: () => ReturnType<typeof apiSlice.endpoints.setPassword.useMutation>;
-    // useSetNotificationsMutation: () => ReturnType<typeof apiSlice.endpoints.setNotifications.useMutation>;
+    useSetNotificationsMutation: () => ReturnType<typeof apiSlice.endpoints.setNotifications.useMutation>;
 };

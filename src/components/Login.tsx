@@ -18,9 +18,10 @@ const Login = () => {
     try {
       const response = await loginUser({ email, password }).unwrap();
       console.log('Response:', response);
-      if (response && response.email && response.token) {
+      if (response && response.email && response.token && response.role && response.id) {
         localStorage.setItem('userRole', response.role); // store the user role in localStorage
         localStorage.setItem('authToken', response.token); // store the auth token in localStorage
+        localStorage.setItem('userId', response.id.toString()); // store the user id in localStorage
         setUser({ name: response.email, role: response.role }); // Update the user context
         navigate(response.role === 'admin' ? '/admin' : '/dashboard');
       } else {

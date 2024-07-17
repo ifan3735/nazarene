@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import '../LandingPage.css';  
 
 const LandingPage = () => {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       {/* Header */}
@@ -16,6 +23,44 @@ const LandingPage = () => {
           <Link to="/contact" className="text-gray-700 hover:text-blue-500 mx-2">Contact</Link>
           <Link to="/terms" className="text-gray-700 hover:text-blue-500 mx-2">Terms</Link>
           <Link to="/privacy" className="text-gray-700 hover:text-blue-500 mx-2">Privacy</Link>
+          <div className="relative">
+            <button
+              onClick={toggleDropdown}
+              className="flex items-center bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mx-2 focus:outline-none"
+            >
+              Login
+              <svg
+                className="ml-2 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+            {dropdownOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
+                <Link
+                  to="/login"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={() => setDropdownOpen(false)}
+                >
+                  User Login
+                </Link>
+                <Link
+                  to="/admin-login"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={() => setDropdownOpen(false)}
+                >
+                  Admin Login
+                </Link>
+              </div>
+            )}
+          </div>
           <Link to="/register" className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 mx-2">Register</Link>
         </nav>
       </header>
@@ -38,23 +83,19 @@ const LandingPage = () => {
           </div>
         </section>
 
-        {/* Login Options */}
+        {/* Animation Section */}
         <section className="p-8 bg-gray-200 text-center">
-          <h2 className="text-3xl font-bold mb-6">Login Options</h2>
-          <div className="flex flex-col sm:flex-row justify-center gap-6">
-            <div className="bg-white p-6 rounded shadow-md flex-1 max-w-xs">
-              <h3 className="text-xl font-semibold mb-4">User Login</h3>
-              <p className="text-gray-700 mb-4">Log in to manage your bookings and view your rental history.</p>
-              <Link to="/login" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">User Login</Link>
-            </div>
-            <div className="bg-white p-6 rounded shadow-md flex-1 max-w-xs">
-              <h3 className="text-xl font-semibold mb-4">Admin Login</h3>
-              <p className="text-gray-700 mb-4">Log in to manage the vehicle fleet, bookings, and users.</p>
-              <Link to="/admin-login" className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">Admin Login</Link>
-            </div>
-          </div>
-        </section>
-
+      <h2 className="text-3xl font-bold mb-6">Experience the Ride of Your Life</h2>
+      <div className="relative flex justify-center items-center h-64 bg-white shadow-md rounded-md overflow-hidden">
+        <div className="car-animation">
+          <img
+            src="https://i.pinimg.com/474x/6c/42/d9/6c42d9ab244ad57598591323ebf0bfaf.jpg" // Use a high-resolution image
+            alt="Car Animation"
+            className="car-image"
+          />
+        </div>
+      </div>
+    </section>
         {/* Featured Vehicles */}
         <section className="p-8 bg-gray-100">
           <h2 className="text-3xl font-bold text-center mb-6">Featured Vehicles</h2>
