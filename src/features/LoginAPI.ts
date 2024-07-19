@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-
 export interface Details {
     name: string;
     email: string;
@@ -29,6 +28,7 @@ export interface User3 {
 export interface Vehicle {
     vehicle_spec_id: number;
     availability: string;
+    rental_rate: number;
 }
 
 export interface Location {
@@ -41,7 +41,7 @@ export interface SupportTicket {
     user_id: number;
     subject: string;
     description: string;
-    status: typeof closed | typeof open;
+    status: 'closed' | 'open';
 }
 
 export interface Fleet {
@@ -55,14 +55,12 @@ export interface Fleet {
 
 export interface LoginResponse {
     id: number;
-  token: string;
-//   user: User;
-email: string;
-role: string;
+    token: string;
+    email: string;
+    role: string;
 }
 
-export interface RegisterResponse {
-}
+export interface RegisterResponse {}
 
 export interface Id {
     id: number;
@@ -70,15 +68,16 @@ export interface Id {
 
 export const apiSlice = createApi({
     reducerPath: 'api',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000',
-    prepareHeaders: (headers) => {
-        const token = localStorage.getItem('authToken');
-        if (token) {
-            headers.set('authorization', `Bearer ${token}`);
+    baseQuery: fetchBaseQuery({ 
+        baseUrl: 'http://localhost:3000',
+        prepareHeaders: (headers) => {
+            const token = localStorage.getItem('authToken');
+            if (token) {
+                headers.set('authorization', `Bearer ${token}`);
+            }
+            return headers;
         }
-        return headers;
-    }
-     }),
+    }),
     endpoints: (builder) => ({
         loginUser: builder.mutation<LoginResponse, { email: string; password: string }>({
             query: (credentials) => ({
@@ -107,8 +106,8 @@ export const apiSlice = createApi({
         fetchOneUser: builder.query<User2, number>({
             query: (id) => `/users/${id}`,
         }),
-        updateUser: builder.mutation ({
-            query: ( user ) => ({
+        updateUser: builder.mutation<void, User2>({
+            query: (user) => ({
                 url: `/users/${user.id}`,
                 method: 'PUT',
                 body: user,
@@ -130,6 +129,9 @@ export const apiSlice = createApi({
         fetchAllVehicles: builder.query<Vehicle[], void>({
             query: () => '/vehicles',
         }),
+        fetchOneVehicle: builder.query<Vehicle, number>({
+            query: (id) => `/vehicles/${id}`,
+        }),
         updateVehicle: builder.mutation<Vehicle, { id: number; vehicle: Vehicle }>({
             query: ({ id, vehicle }) => ({
                 url: `/vehicles/${id}`,
@@ -150,6 +152,22 @@ export const apiSlice = createApi({
                 method: 'DELETE',
             }),
         }),
+        fetchVehicleDetails: builder.query<Vehicle, number>({
+            query: (id) => `/vehicles/${id}`,
+        }),
+        checkAvailability: builder.query<boolean, { vehicleId: number; bookingDate: string; numberOfDays: number }>({
+            query: ({ vehicleId, bookingDate, numberOfDays }) => ({
+                url: `/vehicles/${vehicleId}`,
+                params: { bookingDate, numberOfDays },
+            }),
+        }),
+        bookVehicle: builder.mutation<void, { vehicleId: number; bookingDate: string; numberOfDays: number }>({
+            query: (booking) => ({
+                url: '/bookings',
+                method: 'POST',
+                body: booking,
+            }),
+        }),
         fetchAllLocations: builder.query<Location[], void>({
             query: () => '/locations',
         }),
@@ -161,10 +179,10 @@ export const apiSlice = createApi({
             }),
         }),
         addLocation: builder.mutation<Location, Location>({
-            query: (Location) => ({
+            query: (location) => ({
                 url: '/locations',
                 method: 'POST',
-                body: Location,
+                body: location,
             }),
         }),
         deleteLocation: builder.mutation<void, number>({
@@ -177,10 +195,10 @@ export const apiSlice = createApi({
             query: () => '/customerSupportTickets',
         }),
         addSupportTicket: builder.mutation<SupportTicket, SupportTicket>({
-            query: (SupportTicket) => ({
+            query: (supportTicket) => ({
                 url: '/customerSupportTickets',
                 method: 'POST',
-                body: SupportTicket,
+                body: supportTicket,
             }),
         }),
         deleteSupportTicket: builder.mutation<void, number>({
@@ -189,21 +207,21 @@ export const apiSlice = createApi({
                 method: 'DELETE',
             }),
         }),
-        updateSupportTicket: builder.mutation<SupportTicket, { id: number; SupportTicket: SupportTicket }>({
-            query: ({ id, SupportTicket }) => ({
+        updateSupportTicket: builder.mutation<SupportTicket, { id: number; supportTicket: SupportTicket }>({
+            query: ({ id, supportTicket }) => ({
                 url: `/customerSupportTickets/${id}`,
                 method: 'PUT',
-                body: SupportTicket,
+                body: supportTicket,
             }),
         }),
         fetchAllFleet: builder.query<Fleet[], void>({
             query: () => '/fleet',
         }),
         addFleet: builder.mutation<Fleet, Fleet>({
-            query: (Fleet) => ({
+            query: (fleet) => ({
                 url: '/fleet',
                 method: 'POST',
-                body: Fleet,
+                body: fleet,
             }),
         }),
         deleteFleet: builder.mutation<void, number>({
@@ -212,26 +230,26 @@ export const apiSlice = createApi({
                 method: 'DELETE',
             }),
         }),
-        updateFleet: builder.mutation<Fleet, { id: number; Fleet: Fleet }>({
-            query: ({ id, Fleet }) => ({
+        updateFleet: builder.mutation<Fleet, { id: number; fleet: Fleet }>({
+            query: ({ id, fleet }) => ({
                 url: `/fleet/${id}`,
                 method: 'PUT',
-                body: Fleet,
+                body: fleet,
             }),
         }),
         fetchUserProfile: builder.query<User, Id>({
-            query: (Id) => `/user/${Id}`,
+            query: (id) => `/user/${id}`,
         }),
         updateUserProfile: builder.mutation<User, User>({
-            query: (Id) => ({
-                url:`/user/${Id}`,
+            query: (user) => ({
+                url:`/user/${user.id}`,
                 method: 'PUT',
-                body: Id,
+                body: user,
             }),
         }),
         updateUserPassword: builder.mutation<User3, User3>({
             query: (user) => ({
-                url: `user${user.id}`,
+                url: `/user/${user.id}`,
                 method: 'PUT',
                 body: user,
             }),
@@ -271,7 +289,10 @@ export const { useLoginUserMutation, useRegisterUserMutation,
     useFetchAllSupportTicketsQuery, useDeleteSupportTicketMutation,
     useUpdateSupportTicketMutation, useAddFleetMutation,
     useDeleteFleetMutation, useFetchAllFleetQuery, 
-    useUpdateFleetMutation, useFetchOneUserQuery, useUpdateUserPasswordMutation, useSetNotificationsMutation } = apiSlice as {
+    useUpdateFleetMutation, useFetchOneUserQuery, useUpdateUserPasswordMutation,
+     useSetNotificationsMutation, useBookVehicleMutation, 
+     useFetchVehicleDetailsQuery, useCheckAvailabilityQuery  } = apiSlice as {
+        useCheckAvailabilityQuery: (Id) => ReturnType<typeof apiSlice.endpoints.checkAvailability.useQuery>;
     useLoginUserMutation: () => ReturnType<typeof apiSlice.endpoints.loginUser.useMutation>;
     useRegisterUserMutation: () => ReturnType<typeof apiSlice.endpoints.registerUser.useMutation>;
     useAdminLoginMutation: () => ReturnType<typeof apiSlice.endpoints.adminLogin.useMutation>;
@@ -302,4 +323,6 @@ export const { useLoginUserMutation, useRegisterUserMutation,
     // useSetProfileMutation: () => ReturnType<typeof apiSlice.endpoints.setProfile.useMutation>;
     // useSetPasswordMutation: () => ReturnType<typeof apiSlice.endpoints.setPassword.useMutation>;
     useSetNotificationsMutation: () => ReturnType<typeof apiSlice.endpoints.setNotifications.useMutation>;
+    useFetchVehicleDetailsQuery: (id: number) => ReturnType<typeof apiSlice.endpoints.fetchVehicleDetails.useQuery>;
+    useBookVehicleMutation: () => ReturnType<typeof apiSlice.endpoints.bookVehicle.useMutation>;
 };

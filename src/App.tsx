@@ -1,4 +1,3 @@
-// App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
@@ -41,7 +40,7 @@ const App = () => {
           <Route path="/admin/locations" element={<Locations />} />
           <Route path="/admin/support-tickets" element={<SupportTickets />} />
           <Route path="/admin/fleet-management" element={<FleetManagement />} />
-          <Route path="/booking" element={<VehicleBooking />} />
+          <Route path="/booking/:id" element={<VehicleBooking />} />
           <Route path="/bookings" element={<Bookings />} />
         </Routes>
     </UserProvider>

@@ -56,3 +56,23 @@ export const deleteVehicle = async (id: number): Promise<void> => {
     console.error('Error deleting vehicle:', error);
   }
 };
+
+export const fetchVehicleDetails = async (id: number): Promise<Vehicle | null> => {
+  try {
+    const response = await axios.get<Vehicle>(`/vehicles/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching vehicle details:', error);
+    return null;
+  }
+}
+
+export const checkAvailability = async (vehicleId: number, bookingDate: string, numberOfDays: number): Promise<boolean> => {
+  try {
+    const response = await axios.post<boolean>('/availability', { vehicleId, bookingDate, numberOfDays });
+    return response.data;
+  } catch (error) {
+    console.error('Error checking availability:', error);
+    return false;
+  }
+};

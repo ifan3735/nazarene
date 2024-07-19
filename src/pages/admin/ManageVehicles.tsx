@@ -9,6 +9,8 @@ import { Vehicle } from '../../types';
 
 const ManageVehicles: React.FC = () => {
   const { data: vehicles = [], refetch } = useFetchAllVehiclesQuery();
+  console.log('Fetched Vehicles:', vehicles); // Log the fetched vehicles to inspect data structure
+
   const [addVehicle] = useAddVehicleMutation();
   const [updateVehicle] = useUpdateVehicleMutation();
   const [deleteVehicle] = useDeleteVehicleMutation();
@@ -108,6 +110,7 @@ const ManageVehicles: React.FC = () => {
               <th className="py-2 px-4 border-b">Availability</th>
               <th className="py-2 px-4 border-b">Created At</th>
               <th className="py-2 px-4 border-b">Updated At</th>
+              <th className="py-2 px-4 border-b">Rental Rate</th>
               <th className="py-2 px-4 border-b">Actions</th>
             </tr>
           </thead>
@@ -115,10 +118,11 @@ const ManageVehicles: React.FC = () => {
             {vehicles.map((vehicle) => (
               <tr key={vehicle.id}>
                 <td className="py-2 px-4 border-b">{vehicle.id}</td>
-                <td className="py-2 px-4 border-b">{vehicle.vehicle_spec_id}</td>
+                <td className="py-2 px-4 border-b">{vehicle.vehicle_specs.id}</td>
                 <td className="py-2 px-4 border-b">{vehicle.availability}</td>
                 <td className="py-2 px-4 border-b">{vehicle.created_at}</td>
                 <td className="py-2 px-4 border-b">{vehicle.updated_at}</td>
+                <td className="py-2 px-4 border-b">{vehicle.rental_rate}</td>
                 <td className="py-2 px-4 border-b">
                   <button
                     className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 mr-2"
