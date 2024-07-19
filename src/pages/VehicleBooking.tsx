@@ -145,6 +145,7 @@ const VehicleBooking = () => {
                 value={bookingDate}
                 onChange={(e) => setBookingDate(e.target.value)}
                 required
+                disabled={vehicle.availability === 'booked'}
               />
               <label className="block mb-2 text-lg text-gray-800">Number of Days:</label>
               <input
@@ -154,18 +155,20 @@ const VehicleBooking = () => {
                 onChange={(e) => setNumberOfDays(Number(e.target.value))}
                 min="1"
                 required
+                disabled={vehicle.availability === 'booked'}
               />
               <p className="text-lg text-gray-800 mb-4"><strong>Total Amount:</strong> ${totalAmount}</p>
               {availability === 'booked' && (
                 <p className="text-red-500 mb-4">The vehicle is not available for the selected dates.</p>
               )}
               <button
-                onClick={handleBooking}
-                className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
-                disabled={availability === 'booked'}
-              >
-                Book
-              </button>
+  onClick={handleBooking}
+  className={`w-full py-2 rounded-md transition duration-300 ${vehicle.availability === 'booked' ? 'bg-gray-500 text-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
+  disabled={vehicle.availability === 'booked'}
+>
+  Book
+</button>
+
               {error && <p className="text-red-500 mt-4">{error}</p>}
             </div>
           </div>
