@@ -27,7 +27,7 @@ export interface User3 {
 
 export interface Vehicle {
     vehicle_spec_id: number;
-    availability: string;
+    availability: 'available' | 'booked';
     rental_rate: number;
 }
 
@@ -155,7 +155,7 @@ export const apiSlice = createApi({
         fetchVehicleDetails: builder.query<Vehicle, number>({
             query: (id) => `/vehicles/${id}`,
         }),
-        checkAvailability: builder.query<boolean, { vehicleId: number; bookingDate: string; numberOfDays: number }>({
+        checkAvailability: builder.query<RemotePlaybackAvailabilityCallback, { vehicleId: number; bookingDate: string; numberOfDays: number }>({
             query: ({ vehicleId, bookingDate, numberOfDays }) => ({
                 url: `/vehicles/${vehicleId}`,
                 params: { bookingDate, numberOfDays },

@@ -57,10 +57,10 @@ const VehicleBooking = () => {
   const [bookingDate, setBookingDate] = useState('');
   const [numberOfDays, setNumberOfDays] = useState(1);
   const [totalAmount, setTotalAmount] = useState(0);
-  const [availability, setAvailability] = useState<boolean | null>(null);
+  const [availability, setAvailability] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const { data: isAvailable, isLoading: isAvailabilityLoading } = useCheckAvailabilityQuery({ 
+  const { data: availabilityStatus, isLoading: isAvailabilityLoading } = useCheckAvailabilityQuery({ 
     vehicleId, 
     bookingDate, 
     numberOfDays 
@@ -70,13 +70,17 @@ const VehicleBooking = () => {
     if (vehicle && bookingDate) {
       setTotalAmount(vehicle.rental_rate * numberOfDays);
     }
-    if (isAvailable !== undefined) {
-      setAvailability(isAvailable);
+    if (availabilityStatus !== undefined) {
+      setAvailability(availabilityStatus);
     }
-  }, [vehicle, bookingDate, numberOfDays, isAvailable]);
+  }, [vehicle, bookingDate, numberOfDays, availabilityStatus]);
 
   const handleBooking = async (e) => {
     e.preventDefault();
+    if (vehicle.availability === 'booked') {
+      alert('The vehicle is already booked for the selected dates.');
+      return;
+    }
     try {
       const booking = {
         vehicle_id: vehicleId,
@@ -152,13 +156,13 @@ const VehicleBooking = () => {
                 required
               />
               <p className="text-lg text-gray-800 mb-4"><strong>Total Amount:</strong> ${totalAmount}</p>
-              {availability === false && (
+              {availability === 'booked' && (
                 <p className="text-red-500 mb-4">The vehicle is not available for the selected dates.</p>
               )}
               <button
                 onClick={handleBooking}
                 className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
-                disabled={availability === false}
+                disabled={availability === 'booked'}
               >
                 Book
               </button>
