@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useFetchAllVehiclesQuery } from '../features/LoginAPI';
 
-
 const vehicleImages: Record<number, string> = {
   1: 'https://i.pinimg.com/236x/f2/c0/75/f2c075302e5d0dce06c6e0952baf5081.jpg', // Toyota Camry
   2: 'https://i.pinimg.com/236x/c3/32/c6/c332c620e386b97fed50c2200dcf3c74.jpg', // Honda Civic
@@ -79,7 +78,7 @@ const Bookings = () => {
                 )}
                 <button
                   onClick={() => handleMoreDetails(vehicle.id)}
-                  className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+                  className="bg-gradient-to-r from-green-400 to-blue-500 text-white py-2 px-4 rounded-md hover:from-green-500 hover:to-blue-600 shadow-lg transition duration-300"
                 >
                   More Details
                 </button>
@@ -93,7 +92,6 @@ const Bookings = () => {
         <p>Error loading vehicles.</p>
       ) : null}
     </div>
-
   );
 };
 
