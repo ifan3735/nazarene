@@ -114,7 +114,7 @@ const VehicleBooking = () => {
         <div className="bg-white bg-opacity-90 p-8 rounded-lg shadow-lg w-full max-w-3xl backdrop-blur-md">
           <button 
             onClick={() => navigate(-1)} 
-            className="bg-gray-300 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-400 mb-4 transition duration-300"
+            className="bg-gradient-to-r from-green-400 to-blue-500 text-white py-2 px-4 rounded-md hover:from-green-500 hover:to-blue-600 shadow-lg mb-4 transition duration-300"
           >
             Back
           </button>
@@ -162,12 +162,12 @@ const VehicleBooking = () => {
                 <p className="text-red-500 mb-4">The vehicle is not available for the selected dates.</p>
               )}
               <button
-  onClick={handleBooking}
-  className={`w-full py-2 rounded-md transition duration-300 ${vehicle.availability === 'booked' ? 'bg-gray-500 text-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
-  disabled={vehicle.availability === 'booked'}
->
-  Book
-</button>
+                onClick={handleBooking}
+                className={`w-full py-2 rounded-md transition duration-300 ${vehicle.availability === 'booked' ? 'bg-gray-500 text-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
+                disabled={vehicle.availability === 'booked'}
+              >
+                Book
+              </button>
 
               {error && <p className="text-red-500 mt-4">{error}</p>}
             </div>
