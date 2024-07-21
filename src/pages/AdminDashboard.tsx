@@ -1,4 +1,3 @@
-// src/pages/admin/AdminDashboard.tsx
 import React, { useState, useEffect } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
 import {
@@ -139,11 +138,11 @@ const AdminDashboard = () => {
       case 'overview':
         return (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white p-6 rounded shadow">
+            <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
               <h2 className="text-xl font-bold mb-4">Total Bookings</h2>
               <Bar data={barChartData} options={barChartOptions} />
             </div>
-            <div className="bg-white p-6 rounded shadow">
+            <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
               <h2 className="text-xl font-bold mb-4">Revenue Generated</h2>
               <Line data={lineChartData} options={lineChartOptions} />
             </div>
