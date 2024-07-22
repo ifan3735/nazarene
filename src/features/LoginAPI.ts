@@ -97,7 +97,7 @@ export interface Id {
 export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({ 
-        baseUrl: 'http://localhost:3000',
+        baseUrl: 'https://transportdb.onrender.com',
         prepareHeaders: (headers) => {
             const token = localStorage.getItem('authToken');
             if (token) {
