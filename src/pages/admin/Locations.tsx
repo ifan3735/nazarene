@@ -136,7 +136,7 @@ const Locations: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {locations.map((location) => (
+            {locations.map((location: any) => (
               <tr key={location.id}>
                 <td className="py-2 px-4 border-b">{location.id}</td>
                 <td className="py-2 px-4 border-b">{location.name}</td>

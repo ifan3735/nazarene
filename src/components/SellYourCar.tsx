@@ -1,5 +1,4 @@
 // src/components/SellYourCar.tsx
-import React from 'react';
 
 const SellYourCar = () => {
   return (

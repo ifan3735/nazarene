@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import  { useContext } from 'react';
 import { Line } from 'react-chartjs-2';
 import { useNavigate } from 'react-router-dom';
-import UserContext from '../contexts/UserContext';
+import {UserContext}from '../contexts/UserContext';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  const { user } = useContext(UserContext) || {};
 
   const data = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -37,7 +37,7 @@ const Dashboard = () => {
     <div className="p-8 bg-gray-100 min-h-screen">
       {/* User Greeting */}
       <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold text-gray-800 mb-2">Welcome Back, {user.name}!</h1>
+        <h1 className="text-4xl font-bold text-gray-800 mb-2">Welcome Back, {user?.name}!</h1>
         <p className="text-gray-600">Here’s what’s happening with your account today.</p>
       </div>
 

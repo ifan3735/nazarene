@@ -53,6 +53,34 @@ export interface Fleet {
     status: string;
 }
 
+export interface checkout {
+    amount: number;
+    currency: string;
+    booking_id: number;
+}
+
+export interface checkoutResponse {
+    sessionId: string;
+    checkouturl: string;
+}
+
+export interface booking {
+    id: number;
+    user_id: number;
+    vehicle_id: number;
+    location_id: number;
+    booking_date: string;
+    return_date: string;
+    total_amount: string;
+}
+
+export interface bookingResponse {
+    id: number;
+    user_id: number;
+    vehicle_id: number;
+    location_id: number;
+}
+
 export interface LoginResponse {
     id: number;
     token: string;
@@ -139,7 +167,7 @@ export const apiSlice = createApi({
                 body: vehicle,
             }),
         }),
-        addVehicle: builder.mutation<Vehicle, Vehicle>({
+        addVehicle: builder.mutation({
             query: (vehicle) => ({
                 url: '/vehicles',
                 method: 'POST',
@@ -155,13 +183,12 @@ export const apiSlice = createApi({
         fetchVehicleDetails: builder.query<Vehicle, number>({
             query: (id) => `/vehicles/${id}`,
         }),
-        checkAvailability: builder.query<RemotePlaybackAvailabilityCallback, { vehicleId: number; bookingDate: string; numberOfDays: number }>({
-            query: ({ vehicleId, bookingDate, numberOfDays }) => ({
-                url: `/vehicles/${vehicleId}`,
-                params: { bookingDate, numberOfDays },
+        checkAvailability: builder.query<void, number>({
+            query: (vehicleId) => ({
+                url: `/vehicles/${vehicleId}`
             }),
         }),
-        bookVehicle: builder.mutation<void, { vehicleId: number; bookingDate: string; numberOfDays: number }>({
+        bookVehicle: builder.mutation<booking, Partial<booking>>({
             query: (booking) => ({
                 url: '/bookings',
                 method: 'POST',
@@ -275,6 +302,13 @@ export const apiSlice = createApi({
                 body: user,
             }),
         }),
+        checkout: builder.mutation({
+            query: (chekout) => ({
+                url: '/create-checkout-session',
+                method: 'POST',
+                body: chekout,
+            }),
+        }),
     }),
 });
 
@@ -291,8 +325,8 @@ export const { useLoginUserMutation, useRegisterUserMutation,
     useDeleteFleetMutation, useFetchAllFleetQuery, 
     useUpdateFleetMutation, useFetchOneUserQuery, useUpdateUserPasswordMutation,
      useSetNotificationsMutation, useBookVehicleMutation, 
-     useFetchVehicleDetailsQuery, useCheckAvailabilityQuery  } = apiSlice as {
-        useCheckAvailabilityQuery: (Id) => ReturnType<typeof apiSlice.endpoints.checkAvailability.useQuery>;
+     useFetchVehicleDetailsQuery, useCheckAvailabilityQuery , useCheckoutMutation } = apiSlice as {
+        useCheckAvailabilityQuery: (id: number) => ReturnType<typeof apiSlice.endpoints.checkAvailability.useQuery>;
     useLoginUserMutation: () => ReturnType<typeof apiSlice.endpoints.loginUser.useMutation>;
     useRegisterUserMutation: () => ReturnType<typeof apiSlice.endpoints.registerUser.useMutation>;
     useAdminLoginMutation: () => ReturnType<typeof apiSlice.endpoints.adminLogin.useMutation>;
@@ -325,4 +359,5 @@ export const { useLoginUserMutation, useRegisterUserMutation,
     useSetNotificationsMutation: () => ReturnType<typeof apiSlice.endpoints.setNotifications.useMutation>;
     useFetchVehicleDetailsQuery: (id: number) => ReturnType<typeof apiSlice.endpoints.fetchVehicleDetails.useQuery>;
     useBookVehicleMutation: () => ReturnType<typeof apiSlice.endpoints.bookVehicle.useMutation>;
+    useCheckoutMutation: () => ReturnType<typeof apiSlice.endpoints.checkout.useMutation>;
 };

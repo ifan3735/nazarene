@@ -1,4 +1,3 @@
-import React from 'react';
 
 const Calendar = () => {
   // Example data for user's schedule and events (replace with actual data or API calls)

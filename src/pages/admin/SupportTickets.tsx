@@ -56,7 +56,7 @@ const SupportTickets: React.FC = () => {
   const handleUpdateSupportTicket = async () => {
     if (selectedSupportTicket) {
       try {
-        const updated = await updateSupportTicket({ id: selectedSupportTicket.id, SupportTicket: newSupportTicket }).unwrap();
+        const updated = await updateSupportTicket({ id: selectedSupportTicket.id, supportTicket: newSupportTicket }).unwrap();
         if (updated) {
           setSelectedSupportTicket(null);
           setNewSupportTicket({
@@ -115,7 +115,7 @@ const SupportTickets: React.FC = () => {
           <select
             className="block w-full p-2 mb-3 border rounded"
             value={newSupportTicket.status}
-            onChange={(e) => setNewSupportTicket({ ...newSupportTicket, status: e.target.value })}
+            onChange={(e) => setNewSupportTicket({ ...newSupportTicket, status: e.target.value as "open" | "closed" })}
             required
           >
             <option value="open">Open</option>
@@ -143,7 +143,7 @@ const SupportTickets: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {supportTickets.map((supportTicket) => (
+            {supportTickets.map((supportTicket: any) => (
               <tr key={supportTicket.id}>
                 <td className="py-2 px-4 border-b">{supportTicket.id}</td>
                 <td className="py-2 px-4 border-b">{supportTicket.user_id}</td>

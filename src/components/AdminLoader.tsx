@@ -1,5 +1,4 @@
 // src/components/AdminLoader.tsx
-import React from 'react';
 
 const AdminLoader = () => {
   return (

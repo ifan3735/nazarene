@@ -1,5 +1,5 @@
 // src/components/UserDashboard.tsx
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { TailSpin } from 'react-loader-spinner';
 import Loader from '../components/Loader';
 import Dashboard from '../components/Dashboard';

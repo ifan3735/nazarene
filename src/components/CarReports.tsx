@@ -1,5 +1,4 @@
 // src/components/CarReports.tsx
-import React from 'react';
 
 const CarReports = () => {
   return (

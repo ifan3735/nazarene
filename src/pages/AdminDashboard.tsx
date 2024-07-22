@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
 import {
   Chart,
@@ -11,6 +11,7 @@ import {
   PointElement,
   LineElement,
 } from 'chart.js';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import ManageVehicles from '../pages/admin/ManageVehicles';
 import ManageUsers from '../pages/admin/ManageUsers';
 import Reports from '../pages/admin/Reports';
@@ -28,6 +29,7 @@ const AdminDashboard = () => {
   const [activeComponent, setActiveComponent] = useState('overview');
   const [isPageLoading, setIsPageLoading] = useState(true);
   const [isContentLoading, setIsContentLoading] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     // Simulate initial page loading
@@ -37,6 +39,13 @@ const AdminDashboard = () => {
   }, []);
 
   const handleNavigation = (component: string) => {
+    if (component === 'logout') {
+      // Handle logout and redirect to the home page
+      // Perform logout logic here (e.g., clear user session or tokens)
+      navigate('/'); // Redirect to home page
+      return;
+    }
+
     setIsContentLoading(true);
     setTimeout(() => {
       setActiveComponent(component);

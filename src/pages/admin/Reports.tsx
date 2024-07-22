@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchReports } from '../../services/reportService';
 import { BookingReport, RevenueReport, VehicleUtilizationReport } from '../../types';
 import { Bar, Pie, Line } from 'react-chartjs-2';
-import { Chart, registerables } from 'chart.js';
+import { Chart, ChartData, registerables } from 'chart.js';
 
 Chart.register(...registerables);
 
@@ -28,19 +28,28 @@ const Reports: React.FC = () => {
         {bookingReport && (
           <div className="mb-8">
             <h2 className="text-xl font-semibold mb-2">Booking Summary</h2>
-            <Bar data={bookingReport.data} options={bookingReport.options} />
+            <Bar
+              data={bookingReport.data as ChartData<'bar', number[], string>}
+              // options={bookingReport.options}
+            />
           </div>
         )}
         {revenueReport && (
           <div className="mb-8">
             <h2 className="text-xl font-semibold mb-2">Revenue Report</h2>
-            <Line data={revenueReport.data} options={revenueReport.options} />
+            <Line
+              data={revenueReport.data as ChartData<'line', number[], string>}
+              // options={revenueReport.options}
+            />
           </div>
         )}
         {utilizationReport && (
           <div>
             <h2 className="text-xl font-semibold mb-2">Vehicle Utilization</h2>
-            <Pie data={utilizationReport.data} options={utilizationReport.options} />
+            <Pie
+              data={utilizationReport.data as ChartData<'pie', number[], string>}
+              // options={utilizationReport.options}
+            />
           </div>
         )}
       </div>

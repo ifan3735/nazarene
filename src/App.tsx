@@ -1,5 +1,4 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -19,30 +18,31 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import AdminLogin from './pages/AdminLogin';
 import Bookings from './components/Bookings';
 import { UserProvider } from './contexts/UserContext';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
   return (
     <UserProvider>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/dashboard" element={<UserDashboard />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/terms" element={<TermsOfService />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/admin-login" element={<AdminLogin />} />
-          <Route path="/admin/vehicles" element={<ManageVehicles />} />
-          <Route path="/admin/users" element={<ManageUsers />} />
-          <Route path="/admin/reports" element={<Reports />} />
-          <Route path="/admin/locations" element={<Locations />} />
-          <Route path="/admin/support-tickets" element={<SupportTickets />} />
-          <Route path="/admin/fleet-management" element={<FleetManagement />} />
-          <Route path="/booking/:id" element={<VehicleBooking />} />
-          <Route path="/bookings" element={<Bookings />} />
-        </Routes>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/dashboard" element={<ProtectedRoute element={<UserDashboard />} role="user" />} />
+        <Route path="/admin" element={<ProtectedRoute element={<AdminDashboard />} role="admin" />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/admin/vehicles" element={<ProtectedRoute element={<ManageVehicles />} role="admin" />} />
+        <Route path="/admin/users" element={<ProtectedRoute element={<ManageUsers />} role="admin" />} />
+        <Route path="/admin/reports" element={<ProtectedRoute element={<Reports />} role="admin" />} />
+        <Route path="/admin/locations" element={<ProtectedRoute element={<Locations />} role="admin" />} />
+        <Route path="/admin/support-tickets" element={<ProtectedRoute element={<SupportTickets />} role="admin" />} />
+        <Route path="/admin/fleet-management" element={<ProtectedRoute element={<FleetManagement />} role="admin" />} />
+        <Route path="/booking/:id" element={<VehicleBooking />} />
+        <Route path="/bookings" element={<Bookings />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/terms" element={<TermsOfService />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+      </Routes>
     </UserProvider>
   );
 };

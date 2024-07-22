@@ -1,4 +1,3 @@
-import React from 'react';
 
 const Discover = () => {
   // Example data for new features and services

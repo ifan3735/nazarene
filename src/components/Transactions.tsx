@@ -1,5 +1,4 @@
 // src/components/Transactions.tsx
-import React from 'react';
 
 const Transactions = () => {
   return (

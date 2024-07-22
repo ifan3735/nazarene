@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useFetchAllFleetQuery, useAddFleetMutation, useDeleteFleetMutation, useUpdateFleetMutation } from '../../features/LoginAPI';
 import { FleetManagements } from '../../types';
 
@@ -57,7 +57,7 @@ const FleetManagement: React.FC = () => {
   const handleUpdateFleet = async () => {
     if (selectedFleet) {
       try {
-        const updated = await updateFleet({ id: selectedFleet.id, Fleet: newFleet }).unwrap();
+        const updated = await updateFleet({ id: selectedFleet.id, fleet: newFleet }).unwrap();
         if (updated) {
           setSelectedFleet(null);
           setNewFleet({
@@ -163,7 +163,7 @@ const FleetManagement: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {fleet.map(vehicle => (
+            {fleet.map((vehicle: FleetManagements) => (
               <tr key={vehicle.id}>
                 <td className="py-2 px-4 border-b">{vehicle.id}</td>
                 <td className="py-2 px-4 border-b">{vehicle.vehicle_id}</td>

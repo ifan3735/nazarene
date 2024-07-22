@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useFetchVehicleDetailsQuery, useBookVehicleMutation, useCheckAvailabilityQuery } from '../features/LoginAPI';
+import { useFetchVehicleDetailsQuery, useBookVehicleMutation, useCheckAvailabilityQuery, useCheckoutMutation } from '../features/LoginAPI';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -45,7 +45,6 @@ const vehicleImages: Record<number, string> = {
   38: 'https://i.pinimg.com/474x/37/c4/0a/37c40a27936c2440deaab7b6aa03edd2.jpg',
   39: 'https://i.pinimg.com/236x/ea/2e/20/ea2e20128115693e9dda324ae523b807.jpg',
 };
-
 const VehicleBooking = () => {
   const { id } = useParams();
   const vehicleId = Number(id);
@@ -53,45 +52,64 @@ const VehicleBooking = () => {
 
   const { data: vehicle, error: fetchError, isLoading: isVehicleLoading } = useFetchVehicleDetailsQuery(vehicleId);
   const [bookVehicle] = useBookVehicleMutation();
+  const [createCheckoutSession] = useCheckoutMutation();
 
-  const [bookingDate, setBookingDate] = useState('');
-  const [numberOfDays, setNumberOfDays] = useState(1);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [totalAmount, setTotalAmount] = useState(0);
   const [availability, setAvailability] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const { data: availabilityStatus, isLoading: isAvailabilityLoading } = useCheckAvailabilityQuery({ 
-    vehicleId, 
-    bookingDate, 
-    numberOfDays 
-  });
+  const { data: availabilityStatus, isLoading: isAvailabilityLoading } = useCheckAvailabilityQuery(Number(id ));
 
   useEffect(() => {
-    if (vehicle && bookingDate) {
+    if (vehicle && startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const numberOfDays = Math.ceil((end.getTime() - start.getTime()) / (1000 * 3600 * 24));
       setTotalAmount(vehicle.rental_rate * numberOfDays);
     }
     if (availabilityStatus !== undefined) {
       setAvailability(availabilityStatus);
     }
-  }, [vehicle, bookingDate, numberOfDays, availabilityStatus]);
+  }, [vehicle, startDate, endDate, availabilityStatus]);
 
-  const handleBooking = async (e) => {
+  const handleBooking = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (vehicle.availability === 'booked') {
+    if (availability === 'booked') {
       alert('The vehicle is already booked for the selected dates.');
       return;
     }
+    
+    const bookingPayload = {
+      user_id: 5, // Replace with the actual user ID
+      vehicle_id: vehicleId,
+      location_id: 5, // Replace with the actual location ID
+      booking_date: startDate,
+      return_date: endDate,
+      total_amount: totalAmount.toFixed(2)
+    };
+
     try {
-      const booking = {
-        vehicle_id: vehicleId,
-        booking_date: bookingDate,
-        number_of_days: numberOfDays
+      const bookingResponse = await bookVehicle(bookingPayload).unwrap();
+      const bookingId = bookingResponse.id; 
+
+      if (!bookingId) {
+        throw new Error('Booking ID not returned');
+      }
+
+      const paymentPayload = {
+        amount: totalAmount * 100, // Stripe expects amount in cents
+        currency: 'kes',
+        booking_id: bookingId
       };
-      await bookVehicle(booking);
-      alert('Vehicle booked successfully');
-    } catch (err) {
-      console.error('Error booking vehicle:', err);
-      setError('Failed to book vehicle. Please try again later.');
+
+      console.log('Payment Payload:', paymentPayload);
+      const checkoutResponse = await createCheckoutSession(paymentPayload).unwrap();
+      window.location.href = `${checkoutResponse.checkoutUrl}`;
+    } catch (error) {
+      console.error('Error creating checkout session:', error);
+      setError('Failed to create checkout session. Please try again later.');
     }
   };
 
@@ -138,22 +156,21 @@ const VehicleBooking = () => {
             <div>
               <p className="text-lg text-gray-800 mb-2"><strong>Availability:</strong> {vehicle.availability}</p>
               <p className="text-lg text-gray-800 mb-2"><strong>Rental Rate:</strong> ${vehicle.rental_rate}/day</p>
-              <label className="block mb-2 text-lg text-gray-800">Select Booking Date:</label>
+              <label className="block mb-2 text-lg text-gray-800">Select Start Date:</label>
               <input
                 type="date"
                 className="block w-full p-2 mb-3 border rounded"
-                value={bookingDate}
-                onChange={(e) => setBookingDate(e.target.value)}
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
                 required
                 disabled={vehicle.availability === 'booked'}
               />
-              <label className="block mb-2 text-lg text-gray-800">Number of Days:</label>
+              <label className="block mb-2 text-lg text-gray-800">Select End Date:</label>
               <input
-                type="number"
+                type="date"
                 className="block w-full p-2 mb-3 border rounded"
-                value={numberOfDays}
-                onChange={(e) => setNumberOfDays(Number(e.target.value))}
-                min="1"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
                 required
                 disabled={vehicle.availability === 'booked'}
               />

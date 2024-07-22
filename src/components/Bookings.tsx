@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useFetchAllVehiclesQuery } from '../features/LoginAPI';
+import { Vehicle as VehicleType } from '../types';
 
 const vehicleImages: Record<number, string> = {
   1: 'https://i.pinimg.com/236x/f2/c0/75/f2c075302e5d0dce06c6e0952baf5081.jpg', // Toyota Camry
@@ -58,7 +59,7 @@ const Bookings = () => {
           <h1 className="text-3xl font-bold text-gray-800 mb-4">Bookings</h1>
           <p className="text-gray-600 mb-6">Available vehicles for booking:</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {data.map(vehicle => (
+            {data?.map((vehicle: VehicleType) => (
               <div key={vehicle.id} className="bg-white rounded-lg shadow-md p-4">
                 {vehicle.vehicle_specs && (
                   <>
@@ -68,7 +69,7 @@ const Bookings = () => {
                   </>
                 )}
                 <p className="text-gray-600 mb-4">{vehicle.availability}</p>
-                <p className="text-gray-600 mb-2">Rental_rate: ${vehicle.rental_rate} per day</p>
+                <p className="text-gray-600 mb-2">Rental rate: ${vehicle.rental_rate} per day</p>
                 {vehicleImages[vehicle.id] && (
                   <img
                     src={vehicleImages[vehicle.id]}

@@ -1,4 +1,3 @@
-// src/components/ManageUsers.tsx
 import React, { useState } from 'react';
 import {
   useFetchAllUsersQuery,
@@ -8,36 +7,45 @@ import {
 } from '../../features/LoginAPI';
 import { User, UserRole } from '../../types';
 
+// If UserRole is not defined in '../../types', define it here
+// type UserRole = 'user' | 'admin';
+
+// If User is not defined in '../../types', define it here
+// interface User {
+//   id: number;
+//   name: string;
+//   email: string;
+//   contact_phone: string;
+//   address: string;
+//   role: UserRole;
+//   created_at: string;
+//   updated_at: string;
+// }
+
 const ManageUsers: React.FC = () => {
   const { data: users = [], refetch } = useFetchAllUsersQuery();
-  console.log(users);
   const [addUser] = useAddUserMutation();
-  console.log(addUser);
   const [updateUser] = useUpdateUserMutation();
-  console.log(updateUser);
   const [deleteUser] = useDeleteUserMutation();
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [newUser, setNewUser] = useState<Omit<User, 'id' | 'created_at' | 'updated_at'>>({
+
+  const initialNewUserState: Omit<User, 'id' | 'created_at' | 'updated_at'> = {
     name: '',
     email: '',
     contact_phone: '',
     address: '',
     role: 'user' as UserRole,
-  });
+  };
+
+  const [newUser, setNewUser] = useState<Omit<User, 'id' | 'created_at' | 'updated_at'>>(initialNewUserState);
 
   const handleAddUser = async () => {
     try {
-      const addedUser = await addUser(newUser).unwrap();
+      const addedUser = await addUser({ ...newUser, id: 0, token: '' }).unwrap();
       if (addedUser) {
-        setNewUser({
-          name: '',
-          email: '',
-          contact_phone: '',
-          address: '',
-          role: 'user' as UserRole,
-        });
-        refetch(); // Optionally refetch data to get the latest from server
+        setNewUser(initialNewUserState);
+        refetch();
       }
     } catch (error) {
       console.error('Error adding user:', error);
@@ -51,7 +59,7 @@ const ManageUsers: React.FC = () => {
       email: user.email,
       contact_phone: user.contact_phone,
       address: user.address,
-      role: user.role as UserRole,
+      role: user.role,
     });
     setIsEditing(true);
   };
@@ -59,18 +67,12 @@ const ManageUsers: React.FC = () => {
   const handleUpdateUser = async () => {
     if (selectedUser) {
       try {
-        const updated = await updateUser({ id: selectedUser.id, user: newUser }).unwrap();
-        if (updated) {
+        const updatedUser = await updateUser({ id: selectedUser.id, ...newUser }).unwrap();
+        if (updatedUser !== undefined) {
           setSelectedUser(null);
-          setNewUser({
-            name: '',
-            email: '',
-            contact_phone: '',
-            address: '',
-            role: 'user' as UserRole,
-          });
+          setNewUser(initialNewUserState);
           setIsEditing(false);
-          refetch(); // Optionally refetch data to get the latest from server
+          refetch();
         }
       } catch (error) {
         console.error('Error updating user:', error);
@@ -81,7 +83,7 @@ const ManageUsers: React.FC = () => {
   const handleDeleteUser = async (id: number) => {
     try {
       await deleteUser(id).unwrap();
-      refetch(); // Optionally refetch data to get the latest from server
+      refetch();
     } catch (error) {
       console.error('Error deleting user:', error);
     }
@@ -157,7 +159,7 @@ const ManageUsers: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {users?.map((user) => (
+            {users.map((user: User) => (
               <tr key={user.id}>
                 <td className="py-2 px-4 border-b">{user.id}</td>
                 <td className="py-2 px-4 border-b">{user.name}</td>

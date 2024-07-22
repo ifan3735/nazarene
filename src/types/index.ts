@@ -23,16 +23,17 @@ export interface AuthResponse {
 
 // src/types.ts
 export interface Vehicle {
+  vehicle_specs: any;
   id: number;
   vehicle_spec_id: number;
   availability: string;
   created_at: string;
   updated_at: string;
+  rental_rate: number;
 }
 
 
 // Additional types for other entities...
-import { Chart } from 'chart.js';
 
 export interface BookingReport {
   data: Chart.ChartData;

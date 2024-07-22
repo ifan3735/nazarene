@@ -5,20 +5,38 @@ import {
   useUpdateVehicleMutation,
   useDeleteVehicleMutation
 } from '../../features/LoginAPI';
-import { Vehicle } from '../../types';
+
+// Define Vehicle type inline
+interface Vehicle {
+  id: number;
+  vehicle_specs: {
+    id: number;
+    make: string;
+    model: string;
+    year: number;
+    type: string;
+  };
+  vehicle_specs_id: number;
+  availability: string;
+  created_at: string;
+  updated_at: string;
+  rental_rate: number;
+}
 
 const ManageVehicles: React.FC = () => {
   const { data: vehicles = [], refetch } = useFetchAllVehiclesQuery();
-  console.log('Fetched Vehicles:', vehicles); // Log the fetched vehicles to inspect data structure
+  console.log('Fetched Vehicles:', vehicles);
 
   const [addVehicle] = useAddVehicleMutation();
   const [updateVehicle] = useUpdateVehicleMutation();
   const [deleteVehicle] = useDeleteVehicleMutation();
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [newVehicle, setNewVehicle] = useState<Omit<Vehicle, 'id' | 'created_at' | 'updated_at'>>({
-    vehicle_spec_id: 0,
+
+  const [newVehicle, setNewVehicle] = useState<Pick<Vehicle, 'vehicle_specs_id' | 'availability' | 'rental_rate'>>({
+    vehicle_specs_id: 0,
     availability: 'available',
+    rental_rate: 0,
   });
 
   const handleAddVehicle = async () => {
@@ -26,10 +44,11 @@ const ManageVehicles: React.FC = () => {
       const addedVehicle = await addVehicle(newVehicle).unwrap();
       if (addedVehicle) {
         setNewVehicle({
-          vehicle_spec_id: 0,
+          vehicle_specs_id: 0,
           availability: 'available',
+          rental_rate: 0,
         });
-        refetch(); // Optionally refetch data to get the latest from server
+        refetch();
       }
     } catch (error) {
       console.error('Error adding vehicle:', error);
@@ -39,8 +58,9 @@ const ManageVehicles: React.FC = () => {
   const handleEditVehicle = (vehicle: Vehicle) => {
     setSelectedVehicle(vehicle);
     setNewVehicle({
-      vehicle_spec_id: vehicle.vehicle_spec_id,
+      vehicle_specs_id: vehicle.vehicle_specs_id,
       availability: vehicle.availability,
+      rental_rate: vehicle.rental_rate,
     });
     setIsEditing(true);
   };
@@ -48,14 +68,15 @@ const ManageVehicles: React.FC = () => {
   const handleUpdateVehicle = async () => {
     if (selectedVehicle) {
       try {
-        const updated = await updateVehicle({ id: selectedVehicle.id, vehicle: newVehicle }).unwrap();
+        const updated = await updateVehicle({ id: selectedVehicle.id, vehicle: vehicles }).unwrap();
         if (updated) {
           setNewVehicle({
-            vehicle_spec_id: 0,
+            vehicle_specs_id: 0,
             availability: 'available',
+            rental_rate: 0,
           });
           setIsEditing(false);
-          refetch(); // Optionally refetch data to get the latest from server
+          refetch();
         }
       } catch (error) {
         console.error('Error updating vehicle:', error);
@@ -66,7 +87,7 @@ const ManageVehicles: React.FC = () => {
   const handleDeleteVehicle = async (id: number) => {
     try {
       await deleteVehicle(id).unwrap();
-      refetch(); // Optionally refetch data to get the latest
+      refetch();
     } catch (error) {
       console.error('Error deleting vehicle:', error);
     }
@@ -82,8 +103,8 @@ const ManageVehicles: React.FC = () => {
             type="number"
             placeholder="Vehicle Spec ID"
             className="block w-full p-2 mb-3 border rounded"
-            value={newVehicle.vehicle_spec_id}
-            onChange={(e) => setNewVehicle({ ...newVehicle, vehicle_spec_id: parseInt(e.target.value) })}
+            value={newVehicle.vehicle_specs_id}
+            onChange={(e) => setNewVehicle({ ...newVehicle, vehicle_specs_id: parseInt(e.target.value) })}
             required
           />
           <input
@@ -92,6 +113,14 @@ const ManageVehicles: React.FC = () => {
             className="block w-full p-2 mb-3 border rounded"
             value={newVehicle.availability}
             onChange={(e) => setNewVehicle({ ...newVehicle, availability: e.target.value })}
+            required
+          />
+          <input
+            type="number"
+            placeholder="Rental Rate"
+            className="block w-full p-2 mb-3 border rounded"
+            value={newVehicle.rental_rate}
+            onChange={(e) => setNewVehicle({ ...newVehicle, rental_rate: parseFloat(e.target.value) })}
             required
           />
           <button
@@ -115,7 +144,7 @@ const ManageVehicles: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {vehicles.map((vehicle) => (
+            {vehicles.map((vehicle: Vehicle) => (
               <tr key={vehicle.id}>
                 <td className="py-2 px-4 border-b">{vehicle.id}</td>
                 <td className="py-2 px-4 border-b">{vehicle.vehicle_specs.id}</td>

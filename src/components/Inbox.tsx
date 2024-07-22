@@ -1,5 +1,4 @@
 // src/components/Inbox.tsx
-import React from 'react';
 
 const Inbox = () => {
   return (

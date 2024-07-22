@@ -1,87 +1,243 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FiLogIn } from 'react-icons/fi';// Adjust the import based on your actual service file
+import { useState, useEffect, useContext } from 'react';
+import { Bar, Line } from 'react-chartjs-2';
+import {
+  Chart,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  PointElement,
+  LineElement,
+} from 'chart.js';
+import ManageVehicles from '../pages/admin/ManageVehicles';
+import ManageUsers from '../pages/admin/ManageUsers';
+import Reports from '../pages/admin/Reports';
+import ManageLocations from '../pages/admin/Locations';
+import SupportTickets from '../pages/admin/SupportTickets';
+import FleetManagement from '../pages/admin/FleetManagement';
+import AdminLoader from '../components/AdminLoader';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { useAdminLoginMutation } from '../features/LoginAPI';
+import { UserContext } from '../contexts/UserContext';
+import { useNavigate } from 'react-router-dom';
 
-const AdminLogin = () => {
-  const [adminLogin] = useAdminLoginMutation();
-  const [email, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+// Register components to use in the charts
+Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement);
+
+const AdminDashboard = () => {
+  const [activeComponent, setActiveComponent] = useState('overview');
+  const [isPageLoading, setIsPageLoading] = useState(true);
+  const [isContentLoading, setIsContentLoading] = useState(false);
   const navigate = useNavigate();
+  const userContext = useContext(UserContext);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try{
-    const response = await adminLogin({ email, password });
-    if (response && response.data && response.data.email && response.data.token) {
-      localStorage.setItem('adminRole', response.data.role); // store the user role in localStorage
-      localStorage.setItem('authToken', response.data.token); // store the auth token in localStorage
-      navigate(response.data.role === 'admin' ? '/admin' : '/dashboard');
-    } else {
-      setError('Failed to login. Please check your credentials.');
-    }
-  } catch (error) {
-    setError('Failed to login. Please check your credentials.');
+  if (!userContext) {
+    throw new Error('UserContext must be used within a UserProvider');
   }
-};
+
+  const { setUser } = userContext;
+
+  useEffect(() => {
+    // Simulate initial page loading
+    setTimeout(() => {
+      setIsPageLoading(false);
+    }, 2000); // Adjust the timeout duration as needed
+  }, []);
+
+  const handleNavigation = (component: string) => {
+    setIsContentLoading(true);
+    setTimeout(() => {
+      setActiveComponent(component);
+      setIsContentLoading(false);
+    }, 1000); // Adjust the timeout duration as needed
+  };
+
+  const handleLogout = () => {
+    // Clear user data from localStorage
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userName'); // Optional: Remove user name if stored
+
+    // Update user context
+    setUser(null);
+
+    // Redirect to login page
+    navigate('/login');
+  };
+
+  // Placeholder data
+  const bookingsData = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
+  const revenueData = [2000, 3000, 5000, 7000, 10000, 15000, 20000, 25000, 30000, 35000, 40000, 45000];
+
+  const barChartData = {
+    labels: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ],
+    datasets: [
+      {
+        label: 'Total Bookings',
+        data: bookingsData,
+        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const lineChartData = {
+    labels: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ],
+    datasets: [
+      {
+        label: 'Revenue Generated ($)',
+        data: revenueData,
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1,
+        fill: true,
+      },
+    ],
+  };
+
+  const barChartOptions = {
+    responsive: true,
+    plugins: {
+      legend: { display: true },
+      title: { display: true, text: 'Total Bookings Per Month' },
+    },
+  };
+
+  const lineChartOptions = {
+    responsive: true,
+    plugins: {
+      legend: { display: true },
+      title: { display: true, text: 'Revenue Generated Per Month' },
+    },
+  };
+
+  if (isPageLoading) {
+    return <AdminLoader />;
+  }
+
+  const renderComponent = () => {
+    if (isContentLoading) {
+      return (
+        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+          <div className="loader bg-blue-500 p-4 rounded-full flex space-x-4">
+            <div className="w-5 h-5 bg-white rounded-full animate-bounce"></div>
+            <div className="w-5 h-5 bg-white rounded-full animate-bounce"></div>
+            <div className="w-5 h-5 bg-white rounded-full animate-bounce"></div>
+          </div>
+        </div>
+      );
+    }
+
+    switch (activeComponent) {
+      case 'overview':
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
+              <h2 className="text-xl font-bold mb-4">Total Bookings</h2>
+              <Bar data={barChartData} options={barChartOptions} />
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
+              <h2 className="text-xl font-bold mb-4">Revenue Generated</h2>
+              <Line data={lineChartData} options={lineChartOptions} />
+            </div>
+          </div>
+        );
+      case 'vehicles':
+        return <ManageVehicles />;
+      case 'users':
+        return <ManageUsers />;
+      case 'reports':
+        return <Reports />;
+      case 'locations':
+        return <ManageLocations />;
+      case 'support':
+        return <SupportTickets />;
+      case 'fleet':
+        return <FleetManagement />;
+      default:
+        return <div>Select a section from the sidebar</div>;
+    }
+  };
+
+  const navLinks = [
+    { id: 'overview', label: 'Overview', icon: '📊' },
+    { id: 'vehicles', label: 'Manage Vehicles', icon: '🚗' },
+    { id: 'users', label: 'Manage Users', icon: '👥' },
+    { id: 'reports', label: 'Reports', icon: '📑' },
+    { id: 'locations', label: 'Locations', icon: '📍' },
+    { id: 'support', label: 'Support Tickets', icon: '🛠️' },
+    { id: 'fleet', label: 'Fleet Management', icon: '🚚' },
+  ];
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-200">
-      {/* Header */}
+    <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
-
-      {/* Main Content */}
-      <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url("https://i.pinimg.com/236x/59/25/32/5925328a9e43512728be60afa9f4086c.jpg")' }}>
-        <div className="absolute inset-0 bg-black opacity-50"></div>
-      </div>
-      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md z-10 mt-20"> {/* Added top margin */}
-        <div className="text-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-700">Admin Login</h1>
-          <p className="text-gray-500">Sign in to manage the system</p>
+      <div className="flex flex-1">
+        {/* Sidebar */}
+        <div className="w-1/4 bg-blue-800 border-r border-gray-200 p-4 flex flex-col text-white">
+          <div className="text-center mb-4">
+            <img src="https://i.pinimg.com/236x/0a/e7/16/0ae7168109df3688316c8bfd361ccbfb.jpg" alt="Logo" className="h-24 w-24 mx-auto rounded-full" />
+            <h2 className="text-2xl font-bold mt-2">Admin Dashboard</h2>
+          </div>
+          <nav className="flex flex-col mt-6 space-y-2">
+            {navLinks.map(link => (
+              <button
+                key={link.id}
+                onClick={() => handleNavigation(link.id)}
+                className={`flex items-center py-2 px-4 rounded-lg ${
+                  activeComponent === link.id ? 'bg-blue-600 text-white' : 'hover:bg-blue-700'
+                }`}
+              >
+                <span className="mr-2">{link.icon}</span>
+                {link.label}
+              </button>
+            ))}
+            <button
+              onClick={handleLogout}
+              className="flex items-center py-2 px-4 mt-auto bg-red-600 hover:bg-red-700 text-white rounded-lg"
+            >
+              <span className="mr-2">🚪</span>Logout
+            </button>
+          </nav>
         </div>
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="flex flex-col">
-            <label htmlFor="username" className="text-gray-700 font-semibold mb-2">Email</label>
-            <input
-              type="text"
-              id="username"
-              value={email}
-              onChange={(e) => setUsername(e.target.value)}
-              className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your email"
-              required
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="password" className="text-gray-700 font-semibold mb-2">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your password"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="bg-blue-600 text-white p-3 rounded hover:bg-blue-700 flex items-center justify-center"
-          >
-            <FiLogIn className="mr-2" />
-            Login
-          </button>
-        </form>
-      </div>
 
-      {/* Footer */}
+        {/* Main Content */}
+        <div className="w-3/4 p-6 bg-gray-50">
+          {renderComponent()}
+        </div>
+      </div>
       <Footer />
     </div>
   );
 };
 
-export default AdminLogin;
+export default AdminDashboard;

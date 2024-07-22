@@ -9,7 +9,7 @@ const Settings = () => {
   const id = localStorage.getItem('userId');
   const userId = id ? Number(id) : null;
 
-  const { data: user, isLoading: isUserLoading, isError: isUserError, error: userError } = useFetchOneUserQuery(userId!, { skip: !userId });
+  const { data: user, isLoading: isUserLoading, isError: isUserError, error: userError } = useFetchOneUserQuery(userId!);
 
   const [profile, setProfile] = useState({
     name: '',
@@ -42,7 +42,7 @@ const Settings = () => {
   const handleProfileSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await updateProfile({ id: userId!, user: profile }).unwrap();
+      await updateProfile({ id: userId!, ...profile }).unwrap();
       alert('Profile updated successfully');
     } catch (error) {
       console.error('Error updating profile:', error);

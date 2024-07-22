@@ -1,28 +1,37 @@
-// src/components/Login.tsx
 import React, { useState, useContext } from 'react';
 import { useLoginUserMutation } from '../features/LoginAPI';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
-import UserContext from '../contexts/UserContext';
+import { UserContext } from '../contexts/UserContext';
 
 const Login = () => {
   const [loginUser, { isLoading, isError }] = useLoginUserMutation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
+  const userContext = useContext(UserContext);
+
+  if (!userContext) {
+    throw new Error('UserContext must be used within a UserProvider');
+  }
+
+  const { setUser } = userContext;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await loginUser({ email, password }).unwrap();
       console.log('Response:', response);
+
       if (response && response.email && response.token && response.role && response.id) {
-        localStorage.setItem('userRole', response.role); // store the user role in localStorage
-        localStorage.setItem('authToken', response.token); // store the auth token in localStorage
-        localStorage.setItem('userId', response.id.toString()); // store the user id in localStorage
-        setUser({ name: response.email, role: response.role }); // Update the user context
+        // Update the user context and localStorage
+        setUser({
+          name: response.email,
+          role: response.role,
+        });
+
+        // Redirect based on user role
         navigate(response.role === 'admin' ? '/admin' : '/dashboard');
       } else {
         console.error('Unexpected response structure:', response);
@@ -35,7 +44,6 @@ const Login = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      {/* Main Content */}
       <main className="flex-1 flex items-center justify-center bg-gray-200">
         <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
           <h2 className="text-3xl font-bold mb-6 text-center">Login</h2>
