@@ -11,7 +11,7 @@ import {
   PointElement,
   LineElement,
 } from 'chart.js';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import ManageVehicles from '../pages/admin/ManageVehicles';
 import ManageUsers from '../pages/admin/ManageUsers';
 import Reports from '../pages/admin/Reports';
@@ -29,17 +29,20 @@ const AdminDashboard = () => {
   const [activeComponent, setActiveComponent] = useState('overview');
   const [isPageLoading, setIsPageLoading] = useState(true);
   const [isContentLoading, setIsContentLoading] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
+    // Simulate initial page loading
     setTimeout(() => {
       setIsPageLoading(false);
-    }, 2000);
+    }, 2000); // Adjust the timeout duration as needed
   }, []);
 
   const handleNavigation = (component: string) => {
     if (component === 'logout') {
-      navigate('/');
+      // Handle logout and redirect to the home page
+      // Perform logout logic here (e.g., clear user session or tokens)
+      navigate('/'); // Redirect to home page
       return;
     }
 
@@ -47,15 +50,27 @@ const AdminDashboard = () => {
     setTimeout(() => {
       setActiveComponent(component);
       setIsContentLoading(false);
-    }, 1000);
+    }, 1000); // Adjust the timeout duration as needed
   };
 
+  // Placeholder data
   const bookingsData = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
   const revenueData = [2000, 3000, 5000, 7000, 10000, 15000, 20000, 25000, 30000, 35000, 40000, 45000];
 
   const barChartData = {
     labels: [
-      'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
     ],
     datasets: [
       {
@@ -70,7 +85,18 @@ const AdminDashboard = () => {
 
   const lineChartData = {
     labels: [
-      'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
     ],
     datasets: [
       {
@@ -159,11 +185,11 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
       <div className="flex flex-1">
         {/* Sidebar */}
-        <div className="w-64 bg-blue-800 border-r border-gray-200 p-4 flex flex-col text-white fixed h-screen">
+        <div className="w-1/4 bg-blue-800 border-r border-gray-200 p-4 flex flex-col text-white">
           <div className="text-center mb-4">
             <img src="https://i.pinimg.com/236x/0a/e7/16/0ae7168109df3688316c8bfd361ccbfb.jpg" alt="Logo" className="h-24 w-24 mx-auto rounded-full" />
             <h2 className="text-2xl font-bold mt-2">Admin Dashboard</h2>
@@ -191,7 +217,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 ml-64 p-6 bg-gray-50 overflow-y-auto">
+        <div className="w-3/4 p-6 bg-gray-50">
           {renderComponent()}
         </div>
       </div>
