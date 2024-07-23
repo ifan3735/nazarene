@@ -1,7 +1,7 @@
-import  { useContext } from 'react';
+import { useContext } from 'react';
 import { Line } from 'react-chartjs-2';
 import { useNavigate } from 'react-router-dom';
-import {UserContext}from '../contexts/UserContext';
+import { UserContext } from '../contexts/UserContext';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ const Dashboard = () => {
       </div>
 
       {/* Key Metrics */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
           <h2 className="text-2xl font-bold text-gray-800">Turnover</h2>
           <p className="text-gray-600 text-3xl">$14,492.21</p>
@@ -57,6 +57,11 @@ const Dashboard = () => {
           <h2 className="text-2xl font-bold text-gray-800">Expenses</h2>
           <p className="text-gray-600 text-3xl">$7,592.84</p>
           <p className="text-red-500">-12% from last month</p>
+        </div>
+        <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
+          <h2 className="text-2xl font-bold text-gray-800">Total Bookings</h2>
+          <p className="text-gray-600 text-3xl">120</p> {/* Replace with actual total bookings */}
+          <p className="text-blue-500">+15% from last month</p>
         </div>
       </div>
 
