@@ -26,7 +26,7 @@ const Cancel: React.FC = () => {
         </p>
         <div className="text-center">
           <a
-            href="/retry"
+            href="/dashboard"
             className="bg-red-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-red-600 transition duration-300"
           >
             Retry Payment
