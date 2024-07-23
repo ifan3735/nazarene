@@ -44,15 +44,15 @@ const Login = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 flex items-center justify-center bg-gray-200">
-        <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-          <h2 className="text-3xl font-bold mb-6 text-center">Login</h2>
-          {isError && <p className="text-red-500 mb-4">Failed to login. Please check your credentials.</p>}
+      <main className="flex-1 flex items-center justify-center bg-gradient-to-br from-pink-200 to-indigo-200">
+        <div className="bg-white p-10 rounded-lg shadow-xl w-full max-w-md">
+          <h2 className="text-4xl font-extrabold mb-8 text-center text-purple-700">Welcome Back!</h2>
+          {isError && <p className="text-red-600 mb-4 text-center">Failed to login. Please check your credentials.</p>}
           <form onSubmit={handleSubmit}>
             <input
               type="email"
               placeholder="Email"
-              className="block w-full p-4 mb-4 border rounded text-lg"
+              className="block w-full p-4 mb-4 border border-purple-300 rounded-lg text-lg focus:ring-4 focus:ring-purple-200"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -60,14 +60,14 @@ const Login = () => {
             <input
               type="password"
               placeholder="Password"
-              className="block w-full p-4 mb-6 border rounded text-lg"
+              className="block w-full p-4 mb-6 border border-purple-300 rounded-lg text-lg focus:ring-4 focus:ring-purple-200"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white p-4 rounded text-lg font-bold hover:bg-blue-600"
+              className="w-full bg-purple-500 text-white p-4 rounded-lg text-lg font-bold hover:bg-purple-600 transition duration-300 ease-in-out transform hover:scale-105"
               disabled={isLoading}
             >
               {isLoading ? 'Logging in...' : 'Login'}
