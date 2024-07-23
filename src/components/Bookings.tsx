@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useFetchAllVehiclesQuery } from '../features/LoginAPI';
 import { Vehicle as VehicleType } from '../types';
+import { useState } from 'react';
 
 const vehicleImages: Record<number, string> = {
   1: 'https://i.pinimg.com/236x/f2/c0/75/f2c075302e5d0dce06c6e0952baf5081.jpg', // Toyota Camry
@@ -47,25 +48,42 @@ const vehicleImages: Record<number, string> = {
 const Bookings = () => {
   const navigate = useNavigate();
   const { data, isSuccess, isLoading, error } = useFetchAllVehiclesQuery();
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleMoreDetails = (vehicleId: number) => {
     navigate(`/booking/${vehicleId}`);
   };
 
+  const filteredVehicles = data?.filter((vehicle: VehicleType) => 
+    vehicle.vehicle_specs?.model.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    vehicle.vehicle_specs?.manufacturer.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
-    <div className="p-8">
+    <div className="p-8 bg-gray-50 min-h-screen">
       {isSuccess ? (
         <>
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">Bookings</h1>
-          <p className="text-gray-600 mb-6">Available vehicles for booking:</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {data?.map((vehicle: VehicleType) => (
-              <div key={vehicle.id} className="bg-white rounded-lg shadow-md p-4">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-gray-800 mb-2">Available Bookings</h1>
+            <p className="text-gray-600 mb-6">Find your perfect ride from our selection of vehicles.</p>
+          </div>
+          <div className="max-w-4xl mx-auto mb-8">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search by model or manufacturer..."
+              className="w-full p-4 rounded-lg border border-gray-300 text-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {filteredVehicles?.map((vehicle: VehicleType) => (
+              <div key={vehicle.id} className="bg-white rounded-lg shadow-lg p-6">
                 {vehicle.vehicle_specs && (
                   <>
-                    <h2 className="text-2xl font-bold text-gray-800">Model: {vehicle.vehicle_specs.model}</h2>
-                    <p className="text-gray-600 mb-2">Manufacturer: {vehicle.vehicle_specs.manufacturer}</p>
-                    <p className="text-gray-600 mb-2">Seating Capacity: {vehicle.vehicle_specs.seating_capacity}</p>
+                    <h2 className="text-2xl font-bold text-gray-800 mb-2">Model: {vehicle.vehicle_specs.model}</h2>
+                    <p className="text-gray-600 mb-1">Manufacturer: {vehicle.vehicle_specs.manufacturer}</p>
+                    <p className="text-gray-600 mb-1">Seating Capacity: {vehicle.vehicle_specs.seating_capacity}</p>
                   </>
                 )}
                 <p className="text-gray-600 mb-4">{vehicle.availability}</p>
@@ -74,12 +92,12 @@ const Bookings = () => {
                   <img
                     src={vehicleImages[vehicle.id]}
                     alt={vehicle.vehicle_specs ? vehicle.vehicle_specs.model : 'Vehicle'}
-                    className="w-full h-40 object-cover rounded-md mb-4"
+                    className="w-full h-48 object-cover rounded-md mb-4"
                   />
                 )}
                 <button
                   onClick={() => handleMoreDetails(vehicle.id)}
-                  className="bg-gradient-to-r from-green-400 to-blue-500 text-white py-2 px-4 rounded-md hover:from-green-500 hover:to-blue-600 shadow-lg transition duration-300"
+                  className="w-full bg-gradient-to-r from-green-400 to-blue-500 text-white py-2 px-4 rounded-md hover:from-green-500 hover:to-blue-600 shadow-lg transition duration-300"
                 >
                   More Details
                 </button>
@@ -88,9 +106,13 @@ const Bookings = () => {
           </div>
         </>
       ) : isLoading ? (
-        <p>Loading...</p>
+        <div className="flex justify-center items-center min-h-screen">
+          <div className="text-2xl">Loading...</div>
+        </div>
       ) : error ? (
-        <p>Error loading vehicles.</p>
+        <div className="flex justify-center items-center min-h-screen">
+          <div className="text-2xl text-red-500">Error loading vehicles.</div>
+        </div>
       ) : null}
     </div>
   );
