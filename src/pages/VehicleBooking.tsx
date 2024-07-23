@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useFetchVehicleDetailsQuery, useBookVehicleMutation, useCheckAvailabilityQuery, useCheckoutMutation } from '../features/LoginAPI';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Spinner from '../components/Spinner';  // A simple spinner component for loading states
 
 const vehicleImages: Record<number, string> = {
   1: 'https://i.pinimg.com/236x/f2/c0/75/f2c075302e5d0dce06c6e0952baf5081.jpg', // Toyota Camry
@@ -45,6 +46,7 @@ const vehicleImages: Record<number, string> = {
   38: 'https://i.pinimg.com/474x/37/c4/0a/37c40a27936c2440deaab7b6aa03edd2.jpg',
   39: 'https://i.pinimg.com/236x/ea/2e/20/ea2e20128115693e9dda324ae523b807.jpg',
 };
+
 const VehicleBooking = () => {
   const { id } = useParams();
   const vehicleId = Number(id);
@@ -59,8 +61,9 @@ const VehicleBooking = () => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [availability, setAvailability] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [bookingConfirmed, setBookingConfirmed] = useState(false);
 
-  const { data: availabilityStatus, isLoading: isAvailabilityLoading } = useCheckAvailabilityQuery(Number(id ));
+  const { data: availabilityStatus, isLoading: isAvailabilityLoading } = useCheckAvailabilityQuery(vehicleId);
 
   useEffect(() => {
     if (vehicle && startDate && endDate) {
@@ -114,15 +117,27 @@ const VehicleBooking = () => {
   };
 
   if (isVehicleLoading || isAvailabilityLoading) {
-    return <div className="flex justify-center items-center min-h-screen"><div>Loading...</div></div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <Spinner />
+      </div>
+    );
   }
 
   if (fetchError) {
-    return <div className="flex justify-center items-center min-h-screen"><div>Error loading vehicle details: {fetchError.message}</div></div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div>Error loading vehicle details: {fetchError.message}</div>
+      </div>
+    );
   }
 
   if (!vehicle) {
-    return <div className="flex justify-center items-center min-h-screen"><div>No vehicle details available.</div></div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div>No vehicle details available.</div>
+      </div>
+    );
   }
 
   return (
@@ -187,6 +202,21 @@ const VehicleBooking = () => {
               </button>
 
               {error && <p className="text-red-500 mt-4">{error}</p>}
+              {bookingConfirmed && <p className="text-green-500 mt-4">Booking confirmed! Redirecting to payment...</p>}
+            </div>
+          </div>
+          <div className="mt-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">User Reviews</h2>
+            <div className="space-y-4">
+              <div className="bg-gray-50 p-4 rounded-lg shadow">
+                <p className="text-gray-800"><strong>John Doe:</strong> Amazing car, very comfortable and smooth ride!</p>
+                <p className="text-yellow-500">⭐⭐⭐⭐⭐</p>
+              </div>
+              <div className="bg-gray-50 p-4 rounded-lg shadow">
+                <p className="text-gray-800"><strong>Jane Smith:</strong> Great experience, will definitely rent again.</p>
+                <p className="text-yellow-500">⭐⭐⭐⭐</p>
+              </div>
+              {/* Add more reviews here */}
             </div>
           </div>
         </div>
