@@ -61,7 +61,7 @@ const VehicleBooking = () => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [availability, setAvailability] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [bookingConfirmed, setBookingConfirmed] = useState(false);
+  const [bookingConfirmed] = useState(false);
 
   const { data: availabilityStatus, isLoading: isAvailabilityLoading } = useCheckAvailabilityQuery(vehicleId);
 
