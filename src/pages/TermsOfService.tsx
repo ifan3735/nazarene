@@ -5,7 +5,7 @@ const TermsOfService = () => {
   return (
     <div>
       <Header />
-      <div className="min-h-screen bg-gradient-to-br from-gray-100 to-white flex flex-col items-center p-6">
+      <div className="min-h-screen bg-gradient-to-br from-green-200 via-blue-200 to-purple-300 flex flex-col items-center p-6">
         <section className="max-w-4xl w-full bg-white shadow-xl rounded-lg p-8 mb-12">
           <h1 className="text-5xl font-extrabold mb-8 text-center text-purple-800">Terms of Service</h1>
           <p className="text-gray-700 text-lg leading-relaxed mb-8">
