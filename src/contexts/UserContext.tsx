@@ -17,21 +17,23 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   // Load user from localStorage on component mount
   useEffect(() => {
-    const storedName = localStorage.getItem('userName');
-    const storedRole = localStorage.getItem('userRole');
-    if (storedName && storedRole) {
-      setUser({ name: storedName, role: storedRole });
+    const storedUser = localStorage.getItem('userRole');
+    if (storedUser) {
+      setUser({
+        name: localStorage.getItem('userName') || '',
+        role: storedUser,
+      });
     }
   }, []);
 
   // Save user to localStorage whenever it changes
   useEffect(() => {
     if (user) {
-      localStorage.setItem('userName', user.name);
       localStorage.setItem('userRole', user.role);
+      localStorage.setItem('userName', user.name);
     } else {
-      localStorage.removeItem('userName');
       localStorage.removeItem('userRole');
+      localStorage.removeItem('userName');
     }
   }, [user]);
 
