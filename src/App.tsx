@@ -19,6 +19,8 @@ import AdminLogin from './pages/AdminLogin';
 import Bookings from './components/Bookings';
 import { UserProvider } from './contexts/UserContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import Success from './pages/Success';
+import Cancel from './pages/Cancel';
 
 const App = () => {
   return (
@@ -42,6 +44,8 @@ const App = () => {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/success" element={<Success />} />
+        <Route path="/cancel" element={<Cancel />} />
       </Routes>
     </UserProvider>
   );
