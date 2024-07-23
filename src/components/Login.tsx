@@ -24,15 +24,15 @@ const Login = () => {
       const response = await loginUser({ email, password }).unwrap();
       console.log('Response:', response);
 
-      if (response && response.email && response.token && response.role && response.id) {
+      if (response && response.user && response.token) {
         // Update the user context and localStorage
         setUser({
-          name: response.email,
-          role: response.role,
+          name: response.user.name,
+          role: response.user.role,
         });
 
         // Redirect based on user role
-        navigate(response.role === 'admin' ? '/admin' : '/dashboard');
+        navigate(response.user.role === 'admin' ? '/admin' : '/dashboard');
       } else {
         console.error('Unexpected response structure:', response);
       }

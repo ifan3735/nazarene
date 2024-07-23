@@ -82,6 +82,8 @@ export interface bookingResponse {
 }
 
 export interface LoginResponse {
+    name: string;
+    user: LoginResponse;
     id: number;
     token: string;
     email: string;
