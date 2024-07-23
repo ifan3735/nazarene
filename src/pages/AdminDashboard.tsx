@@ -163,7 +163,7 @@ const AdminDashboard = () => {
       <Header />
       <div className="flex flex-1">
         {/* Sidebar */}
-        <div className="w-1/4 bg-blue-800 border-r border-gray-200 p-4 flex flex-col text-white h-full">
+        <div className="w-64 bg-blue-800 border-r border-gray-200 p-4 flex flex-col text-white fixed h-screen">
           <div className="text-center mb-4">
             <img src="https://i.pinimg.com/236x/0a/e7/16/0ae7168109df3688316c8bfd361ccbfb.jpg" alt="Logo" className="h-24 w-24 mx-auto rounded-full" />
             <h2 className="text-2xl font-bold mt-2">Admin Dashboard</h2>
@@ -191,7 +191,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Main Content */}
-        <div className="w-3/4 p-6 bg-gray-50 overflow-y-auto">
+        <div className="flex-1 ml-64 p-6 bg-gray-50 overflow-y-auto">
           {renderComponent()}
         </div>
       </div>
