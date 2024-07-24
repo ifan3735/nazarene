@@ -1,5 +1,4 @@
-// src/components/UserDashboard.tsx
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { TailSpin } from 'react-loader-spinner';
 import Loader from '../components/Loader';
 import Dashboard from '../components/Dashboard';
@@ -93,14 +92,14 @@ const UserDashboard = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
-      <div className="flex flex-1">
-        {/* Sidebar */}
-        <div className="w-1/4 bg-white border-r border-gray-200 p-4 flex flex-col">
+      <div className="flex flex-1 flex-col md:flex-row">
+        {/* Sidebar for larger screens, Top nav for small screens */}
+        <div className="md:w-1/4 bg-white border-r border-gray-200 p-4 flex flex-col">
           <div className="text-center mb-4">
             <img src="https://i.pinimg.com/236x/0a/e7/16/0ae7168109df3688316c8bfd361ccbfb.jpg" alt="Logo" className="h-24 w-24 mx-auto rounded-full" />
             <h2 className="text-xl font-semibold mt-2">User Dashboard</h2>
           </div>
-          <nav className="flex flex-col mt-6 space-y-2">
+          <nav className="flex flex-col mt-6 space-y-2 md:space-y-0 md:flex-row md:flex-wrap md:justify-between md:items-center">
             {navLinks.map(link => (
               <button
                 key={link.id}
@@ -115,7 +114,7 @@ const UserDashboard = () => {
             ))}
             <button
               onClick={() => handleNavigation('Logout')}
-              className="flex items-center py-2 px-4 mt-auto bg-red-500 hover:bg-red-600 text-white rounded-lg"
+              className="flex items-center py-2 px-4 mt-2 md:mt-auto bg-red-500 hover:bg-red-600 text-white rounded-lg"
             >
               <span className="mr-2">🚪</span>Logout
             </button>
@@ -123,7 +122,7 @@ const UserDashboard = () => {
         </div>
 
         {/* Main Content */}
-        <div className="w-3/4 p-6 bg-gray-50">
+        <div className="md:w-3/4 p-6 bg-gray-50 flex-1">
           {renderComponent()}
         </div>
       </div>
