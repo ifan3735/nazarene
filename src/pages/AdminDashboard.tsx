@@ -187,9 +187,9 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
-      <div className="flex flex-1">
+      <div className="flex flex-1 flex-col md:flex-row">
         {/* Sidebar */}
-        <div className="w-1/4 bg-blue-800 border-r border-gray-200 p-4 flex flex-col text-white">
+        <div className="w-full md:w-1/4 bg-blue-800 border-r border-gray-200 p-4 flex flex-col text-white">
           <div className="text-center mb-4">
             <img src="https://i.pinimg.com/236x/0a/e7/16/0ae7168109df3688316c8bfd361ccbfb.jpg" alt="Logo" className="h-24 w-24 mx-auto rounded-full" />
             <h2 className="text-2xl font-bold mt-2">Admin Dashboard</h2>
@@ -209,7 +209,7 @@ const AdminDashboard = () => {
             ))}
             <button
               onClick={() => handleNavigation('logout')}
-              className="flex items-center py-2 px-4 mt-auto bg-red-600 hover:bg-red-700 text-white rounded-lg"
+              className="flex items-center py-2 px-4 mt-2 md:mt-auto bg-red-600 hover:bg-red-700 text-white rounded-lg"
             >
               <span className="mr-2">🚪</span>Logout
             </button>
@@ -217,7 +217,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Main Content */}
-        <div className="w-3/4 p-6 bg-gray-50">
+        <div className="w-full md:w-3/4 p-6 bg-gray-50">
           {renderComponent()}
         </div>
       </div>
