@@ -99,7 +99,7 @@ const UserDashboard = () => {
             <img src="https://i.pinimg.com/236x/0a/e7/16/0ae7168109df3688316c8bfd361ccbfb.jpg" alt="Logo" className="h-24 w-24 mx-auto rounded-full" />
             <h2 className="text-xl font-semibold mt-2">User Dashboard</h2>
           </div>
-          <nav className="flex flex-col mt-6 space-y-2 md:space-y-0 md:flex-row md:flex-wrap md:justify-between md:items-center">
+          <nav className="flex flex-col mt-6 space-y-2">
             {navLinks.map(link => (
               <button
                 key={link.id}
@@ -114,7 +114,7 @@ const UserDashboard = () => {
             ))}
             <button
               onClick={() => handleNavigation('Logout')}
-              className="flex items-center py-2 px-4 mt-2 md:mt-auto bg-red-500 hover:bg-red-600 text-white rounded-lg"
+              className="flex items-center py-2 px-4 mt-2 bg-red-500 hover:bg-red-600 text-white rounded-lg"
             >
               <span className="mr-2">🚪</span>Logout
             </button>
