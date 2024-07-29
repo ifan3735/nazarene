@@ -4,6 +4,8 @@ export interface Details {
     name: string;
     email: string;
     password: string;
+    contactPhone: string;
+    address: string;
 }
 
 export interface User {

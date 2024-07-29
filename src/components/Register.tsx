@@ -9,12 +9,14 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setFullName] = useState('');
+  const [contactPhone, setContactPhone] = useState('');
+  const [address, setAddress] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const result = await registerUser({ name, email, password });
+      const result = await registerUser({ name, email, password, contactPhone, address });
       console.log('User registered:', result);
       navigate('/login');
     } catch (error) {
@@ -51,9 +53,25 @@ const Register = () => {
             <input
               type="password"
               placeholder="Password"
-              className="block w-full p-4 mb-6 border border-purple-300 rounded-lg text-lg focus:ring-4 focus:ring-purple-200"
+              className="block w-full p-4 mb-4 border border-purple-300 rounded-lg text-lg focus:ring-4 focus:ring-purple-200"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Contact Phone"
+              className="block w-full p-4 mb-4 border border-purple-300 rounded-lg text-lg focus:ring-4 focus:ring-purple-200"
+              value={contactPhone}
+              onChange={(e) => setContactPhone(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Address"
+              className="block w-full p-4 mb-6 border border-purple-300 rounded-lg text-lg focus:ring-4 focus:ring-purple-200"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
               required
             />
             <button
