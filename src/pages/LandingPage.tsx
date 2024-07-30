@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../LandingPage.css';
 
@@ -19,19 +19,22 @@ const LandingPage = () => {
       {/* Header */}
       <header className="bg-white shadow-md p-4 flex justify-between items-center w-full top-0 z-10">
         <div className="flex items-center">
-          <div className="h-16 w-16 bg-cover bg-center mr-2 rounded-full border-2 border-blue-500" style={{ backgroundImage: 'url("https://i.pinimg.com/236x/0a/e7/16/0ae7168109df3688316c8bfd361ccbfb.jpg")' }}></div>
-          <div className="text-2xl font-bold text-blue-500">Nazarene Vehicle Rental</div>
+          <div
+            className="h-16 w-16 bg-cover bg-center mr-2 rounded-full border-2 border-teal-500"
+            style={{ backgroundImage: 'url("https://i.pinimg.com/236x/0a/e7/16/0ae7168109df3688316c8bfd361ccbfb.jpg")' }}
+          ></div>
+          <div className="text-2xl font-bold text-teal-500">Nazarene Vehicle Rental</div>
         </div>
         <nav className="hidden md:flex items-center">
-          <Link to="/" className="text-gray-700 hover:text-blue-500 mx-2">Home</Link>
-          <Link to="/about" className="text-gray-700 hover:text-blue-500 mx-2">About</Link>
-          <Link to="/contact" className="text-gray-700 hover:text-blue-500 mx-2">Contact</Link>
-          <Link to="/terms" className="text-gray-700 hover:text-blue-500 mx-2">Terms</Link>
-          <Link to="/privacy" className="text-gray-700 hover:text-blue-500 mx-2">Privacy</Link>
+          <Link to="/" className="text-gray-700 hover:text-teal-500 mx-2">Home</Link>
+          <Link to="/about" className="text-gray-700 hover:text-teal-500 mx-2">About</Link>
+          <Link to="/contact" className="text-gray-700 hover:text-teal-500 mx-2">Contact</Link>
+          <Link to="/terms" className="text-gray-700 hover:text-teal-500 mx-2">Terms</Link>
+          <Link to="/privacy" className="text-gray-700 hover:text-teal-500 mx-2">Privacy</Link>
           <div className="relative">
             <button
               onClick={toggleDropdown}
-              className="flex items-center bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mx-2 focus:outline-none"
+              className="flex items-center bg-teal-500 text-white py-2 px-4 rounded hover:bg-teal-600 mx-2 focus:outline-none"
             >
               Login
               <svg
@@ -84,14 +87,14 @@ const LandingPage = () => {
       {/* Mobile Menu */}
       {menuOpen && (
         <nav className="md:hidden bg-white shadow-md rounded p-4 mt-2">
-          <Link to="/" className="block text-gray-700 hover:text-blue-500 mb-2">Home</Link>
-          <Link to="/about" className="block text-gray-700 hover:text-blue-500 mb-2">About</Link>
-          <Link to="/contact" className="block text-gray-700 hover:text-blue-500 mb-2">Contact</Link>
-          <Link to="/terms" className="block text-gray-700 hover:text-blue-500 mb-2">Terms</Link>
-          <Link to="/privacy" className="block text-gray-700 hover:text-blue-500 mb-2">Privacy</Link>
+          <Link to="/" className="block text-gray-700 hover:text-teal-500 mb-2">Home</Link>
+          <Link to="/about" className="block text-gray-700 hover:text-teal-500 mb-2">About</Link>
+          <Link to="/contact" className="block text-gray-700 hover:text-teal-500 mb-2">Contact</Link>
+          <Link to="/terms" className="block text-gray-700 hover:text-teal-500 mb-2">Terms</Link>
+          <Link to="/privacy" className="block text-gray-700 hover:text-teal-500 mb-2">Privacy</Link>
           <button
             onClick={toggleDropdown}
-            className="w-full flex items-center bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mb-2 focus:outline-none"
+            className="w-full flex items-center bg-teal-500 text-white py-2 px-4 rounded hover:bg-teal-600 mb-2 focus:outline-none"
           >
             Login
             <svg
@@ -142,23 +145,24 @@ const LandingPage = () => {
           <div className="relative z-10 p-4">
             <h1 className="text-5xl font-bold mb-4">Welcome to Nazarene Vehicle Rental</h1>
             <p className="text-xl mb-8">Rent vehicles easily and manage your bookings with us.</p>
-            <Link to="/login" className="bg-blue-500 text-white py-2 px-6 rounded font-bold hover:bg-blue-600">Book a Vehicle</Link>
+            <Link to="/login" className="bg-teal-500 text-white py-2 px-6 rounded font-bold hover:bg-teal-600">Book a Vehicle</Link>
           </div>
         </section>
 
         {/* Animation Section */}
         <section className="p-8 bg-gray-200 text-center">
-      <h2 className="text-3xl font-bold mb-6">Experience the Ride of Your Life</h2>
-      <div className="relative flex justify-center items-center h-64 bg-white shadow-md rounded-md overflow-hidden">
-        <div className="car-animation">
-          <img
-            src="https://i.pinimg.com/474x/6c/42/d9/6c42d9ab244ad57598591323ebf0bfaf.jpg" // Use a high-resolution image
-            alt="Car Animation"
-            className="car-image"
-          />
-        </div>
-      </div>
-    </section>
+          <h2 className="text-3xl font-bold mb-6">Experience the Ride of Your Life</h2>
+          <div className="relative flex justify-center items-center h-64 bg-white shadow-md rounded-md overflow-hidden">
+            <div className="car-animation">
+              <img
+                src="https://i.pinimg.com/474x/6c/42/d9/6c42d9ab244ad57598591323ebf0bfaf.jpg" // Use a high-resolution image
+                alt="Car Animation"
+                className="car-image"
+              />
+            </div>
+          </div>
+        </section>
+
         {/* Featured Vehicles */}
         <section className="p-8 bg-gray-100">
           <h2 className="text-3xl font-bold text-center mb-6">Featured Vehicles</h2>
@@ -198,7 +202,7 @@ const LandingPage = () => {
               Whether you need a car for a day or a month, we have you covered. Our goal is to provide top-notch service and
               ensure customer satisfaction.
             </p>
-            <Link to="/about" className="text-blue-300 hover:underline mt-4 block">Learn more</Link>
+            <Link to="/about" className="text-teal-300 hover:underline mt-4 block">Learn more</Link>
           </div>
         </section>
       </div>
@@ -210,24 +214,24 @@ const LandingPage = () => {
           <div className="text-center mb-4">
             <p className="text-sm">&copy; {new Date().getFullYear()} Nazarene Vehicle Rental. All rights reserved.</p>
             <nav className="mt-2">
-              <Link to="/contact" className="text-blue-400 hover:underline mx-2">Contact Us</Link>
-              <Link to="/terms" className="text-blue-400 hover:underline mx-2">Terms of Service</Link>
-              <Link to="/privacy" className="text-blue-400 hover:underline mx-2">Privacy Policy</Link>
+              <Link to="/contact" className="text-teal-400 hover:underline mx-2">Contact Us</Link>
+              <Link to="/terms" className="text-teal-400 hover:underline mx-2">Terms of Service</Link>
+              <Link to="/privacy" className="text-teal-400 hover:underline mx-2">Privacy Policy</Link>
             </nav>
           </div>
 
           {/* Social Media Links */}
           <div className="flex justify-center space-x-6 mt-4">
-            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-white transition duration-300">
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="text-teal-500 hover:text-white transition duration-300">
               <i className="fab fa-facebook-f text-2xl"></i>
             </a>
-            <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-white transition duration-300">
+            <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer" className="text-teal-400 hover:text-white transition duration-300">
               <i className="fab fa-twitter text-2xl"></i>
             </a>
             <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="text-pink-500 hover:text-white transition duration-300">
               <i className="fab fa-instagram text-2xl"></i>
             </a>
-            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:text-white transition duration-300">
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className="text-teal-700 hover:text-white transition duration-300">
               <i className="fab fa-linkedin-in text-2xl"></i>
             </a>
           </div>
