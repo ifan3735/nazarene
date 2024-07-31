@@ -15,30 +15,30 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
       {/* Header */}
-      <header className="bg-white shadow-md p-4 flex justify-between items-center w-full top-0 z-10">
+      <header className="bg-teal-500 shadow-md p-4 flex justify-between items-center w-full top-0 z-10">
         <div className="flex items-center">
           <div
             className="h-16 w-16 bg-cover bg-center mr-2 rounded-full border-2 border-teal-500"
             style={{ backgroundImage: 'url("https://i.pinimg.com/236x/0a/e7/16/0ae7168109df3688316c8bfd361ccbfb.jpg")' }}
           ></div>
-          <div className="text-2xl font-bold text-teal-500">Nazarene Vehicle Rental</div>
+          <div className="text-2xl font-bold text-white">Nazarene Vehicle Rental</div>
         </div>
         <nav className="hidden md:flex items-center">
-          <Link to="/" className="text-gray-700 hover:text-teal-500 mx-2">Home</Link>
-          <Link to="/about" className="text-gray-700 hover:text-teal-500 mx-2">About</Link>
-          <Link to="/contact" className="text-gray-700 hover:text-teal-500 mx-2">Contact</Link>
-          <Link to="/terms" className="text-gray-700 hover:text-teal-500 mx-2">Terms</Link>
-          <Link to="/privacy" className="text-gray-700 hover:text-teal-500 mx-2">Privacy</Link>
+          <Link to="/" className="text-white hover:text-gray-200 mx-2">Home</Link>
+          <Link to="/about" className="text-white hover:text-gray-200 mx-2">About</Link>
+          <Link to="/contact" className="text-white hover:text-gray-200 mx-2">Contact</Link>
+          <Link to="/terms" className="text-white hover:text-gray-200 mx-2">Terms</Link>
+          <Link to="/privacy" className="text-white hover:text-gray-200 mx-2">Privacy</Link>
           <div className="relative">
             <button
               onClick={toggleDropdown}
-              className="flex items-center bg-teal-500 text-white py-2 px-4 rounded hover:bg-teal-600 mx-2 focus:outline-none"
+              className="flex items-center bg-white text-teal-500 py-2 px-4 rounded hover:bg-gray-100 mx-2 focus:outline-none"
             >
               Login
               <svg
-                className="ml-2 h-5 w-5 text-white"
+                className="ml-2 h-5 w-5 text-teal-500"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="currentColor"
@@ -73,7 +73,7 @@ const LandingPage = () => {
         </nav>
         <button className="md:hidden flex items-center" onClick={toggleMenu}>
           <svg
-            className="h-6 w-6 text-gray-700"
+            className="h-6 w-6 text-white"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -86,26 +86,26 @@ const LandingPage = () => {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <nav className="md:hidden bg-white shadow-md rounded p-4 mt-2">
-          <Link to="/" className="block text-gray-700 hover:text-teal-500 mb-2">Home</Link>
-          <Link to="/about" className="block text-gray-700 hover:text-teal-500 mb-2">About</Link>
-          <Link to="/contact" className="block text-gray-700 hover:text-teal-500 mb-2">Contact</Link>
-          <Link to="/terms" className="block text-gray-700 hover:text-teal-500 mb-2">Terms</Link>
-          <Link to="/privacy" className="block text-gray-700 hover:text-teal-500 mb-2">Privacy</Link>
+        <nav className="md:hidden bg-teal-500 shadow-md rounded p-4 mt-2">
+          <Link to="/" className="block text-white hover:text-gray-200 mb-2">Home</Link>
+          <Link to="/about" className="block text-white hover:text-gray-200 mb-2">About</Link>
+          <Link to="/contact" className="block text-white hover:text-gray-200 mb-2">Contact</Link>
+          <Link to="/terms" className="block text-white hover:text-gray-200 mb-2">Terms</Link>
+          <Link to="/privacy" className="block text-white hover:text-gray-200 mb-2">Privacy</Link>
           <button
             onClick={toggleDropdown}
-            className="w-full flex items-center bg-teal-500 text-white py-2 px-4 rounded hover:bg-teal-600 mb-2 focus:outline-none"
+            className="w-full flex items-center bg-white text-teal-500 py-2 px-4 rounded hover:bg-gray-100 mb-2 focus:outline-none"
           >
             Login
             <svg
-              className="ml-2 h-5 w-5 text-white"
+              className="ml-2 h-5 w-5 text-teal-500"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
               <path
                 fillRule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a 1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                 clipRule="evenodd"
               />
             </svg>
@@ -135,11 +135,11 @@ const LandingPage = () => {
       <div className="flex-1 mt-16">
         {/* Hero Section */}
         <section
-          className="relative h-96 bg-cover bg-center text-white text-center flex items-center justify-center"
+          className="relative h-96 bg-cover bg-center text-teal-500 text-center flex items-center justify-center"
           style={{ backgroundImage: "url('https://i.pinimg.com/736x/28/4a/83/284a839a8e807a476c61dd77eb56cb71.jpg')" }}
         >
-          {/* Overlay for darkening */}
-          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+          {/* Overlay for lightening */}
+          <div className="absolute inset-0 bg-white bg-opacity-50"></div>
 
           {/* Hero content */}
           <div className="relative z-10 p-4">
@@ -150,7 +150,7 @@ const LandingPage = () => {
         </section>
 
         {/* Animation Section */}
-        <section className="p-8 bg-gray-200 text-center">
+        <section className="p-8 bg-gray-100 text-center">
           <h2 className="text-3xl font-bold mb-6">Experience the Ride of Your Life</h2>
           <div className="relative flex justify-center items-center h-64 bg-white shadow-md rounded-md overflow-hidden">
             <div className="car-animation">
@@ -164,76 +164,54 @@ const LandingPage = () => {
         </section>
 
         {/* Featured Vehicles */}
-        <section className="p-8 bg-gray-100">
+        <section className="p-8 bg-white">
           <h2 className="text-3xl font-bold text-center mb-6">Featured Vehicles</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {/* Replace with your featured vehicles data */}
             {[
-              { img: "https://i.pinimg.com/236x/28/4a/83/284a839a8e807a476c61dd77eb56cb71.jpg", name: "Toyota Camry", desc: "Comfortable and reliable sedan." },
-              { img: "https://i.pinimg.com/236x/21/45/9e/21459e2d2d426235204a9ae1b1e59e80.jpg", name: "Ford Explorer", desc: "Spacious and powerful SUV." },
-              { img: "https://i.pinimg.com/236x/5c/b9/04/5cb9048f80b13be05bd382874f2e5a93.jpg", name: "Honda Civic", desc: "Fuel-efficient and compact car." },
-              { img: "https://i.pinimg.com/236x/1f/5a/e0/1f5ae0bbe38816370f21dfb86412d7c2.jpg", name: "Chevrolet Tahoe", desc: "Full-size SUV with great performance." },
-              { img: "https://i.pinimg.com/474x/78/7a/d4/787ad43e36ec9e2584638c45636fa043.jpg", name: "Jeep Wrangler", desc: "Off-road capable and rugged SUV." },
-              { img: "https://i.pinimg.com/474x/5a/e7/9e/5ae79efba7f9aca7efdff1b079bf1ef7.jpg", name: "Nissan Altima", desc: "Reliable and stylish sedan." },
-              { img: "https://i.pinimg.com/474x/76/90/40/769040bea0bde14efa0118b3973f1f1e.jpg", name: "Ford F-150", desc: "Powerful and versatile pickup truck." },
-              { img: "https://i.pinimg.com/474x/68/39/44/6839446796e1d1cfdaee9aceace52145.jpg", name: "Toyota RAV4", desc: "Compact SUV with great fuel economy." },
-            ].map(vehicle => (
-              <div key={vehicle.name} className="bg-white p-4 rounded shadow-md">
-                <img src={vehicle.img} alt={vehicle.name} className="w-full h-48 object-cover rounded-md mb-4" />
-                <h3 className="text-xl font-semibold">{vehicle.name}</h3>
-                <p className="text-gray-600">{vehicle.desc}</p>
+              { img: "https://i.pinimg.com/236x/28/4a/83/284a839a8e807a476c61dd77eb56cb71.jpg", name: "Vehicle 1", price: "$50/day" },
+              { img: "https://i.pinimg.com/236x/1b/ff/72/1bff72806ae99a0ac6626a41b423daeb.jpg", name: "Vehicle 2", price: "$60/day" },
+              { img: "https://i.pinimg.com/236x/fc/1a/45/fc1a45625468df92c1b3302452a8d497.jpg", name: "Vehicle 3", price: "$70/day" },
+              { img: "https://i.pinimg.com/236x/ae/a8/67/aea8676c438d8c07d1985b9c338535da.jpg", name: "Vehicle 4", price: "$80/day" },
+            ].map((vehicle, index) => (
+              <div key={index} className="bg-gray-100 shadow-md rounded-md p-4 text-center">
+                <img src={vehicle.img} alt={vehicle.name} className="h-40 w-full object-cover mb-4 rounded-md" />
+                <h3 className="text-xl font-semibold mb-2">{vehicle.name}</h3>
+                <p className="text-teal-500 font-bold">{vehicle.price}</p>
+                <Link to="/login" className="mt-4 inline-block bg-teal-500 text-white py-2 px-4 rounded hover:bg-teal-600">Rent Now</Link>
               </div>
             ))}
           </div>
         </section>
 
-        {/* About Us */}
-        <section
-          className="relative p-8 bg-cover bg-center text-white text-center"
-          style={{ backgroundImage: "url('https://i.pinimg.com/236x/06/39/26/0639268d2dad7274ed7fa13f586a2572.jpg')" }}
-        >
-          {/* Overlay for darkening */}
-          <div className="absolute inset-0 bg-black bg-opacity-60"></div>
-
-          <div className="relative z-10">
-            <h2 className="text-3xl font-bold mb-4">About Our Company</h2>
-            <p className="text-gray-300 max-w-2xl mx-auto">
-              Our company provides an easy-to-use vehicle rental service. We offer a wide range of vehicles for all your needs.
-              Whether you need a car for a day or a month, we have you covered. Our goal is to provide top-notch service and
-              ensure customer satisfaction.
-            </p>
-            <Link to="/about" className="text-teal-300 hover:underline mt-4 block">Learn more</Link>
+        {/* Testimonials Section */}
+        <section className="p-8 bg-gray-100">
+          <h2 className="text-3xl font-bold text-center mb-6">What Our Customers Say</h2>
+          <div className="flex flex-col md:flex-row md:space-x-4">
+            {[
+              { name: "John Doe", feedback: "Great service and reliable vehicles!" },
+              { name: "Jane Smith", feedback: "Affordable prices and excellent customer support." },
+              { name: "Alice Johnson", feedback: "Highly recommend Nazarene Vehicle Rental!" },
+            ].map((testimonial, index) => (
+              <div key={index} className="bg-white shadow-md rounded-md p-4 mb-4 md:mb-0 flex-1">
+                <p className="italic mb-2">"{testimonial.feedback}"</p>
+                <p className="font-semibold text-teal-500">{testimonial.name}</p>
+              </div>
+            ))}
           </div>
         </section>
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-6">
-        <div className="container mx-auto flex flex-col items-center justify-center px-4">
-          {/* Copyright and Links */}
-          <div className="text-center mb-4">
-            <p className="text-sm">&copy; {new Date().getFullYear()} Nazarene Vehicle Rental. All rights reserved.</p>
-            <nav className="mt-2">
-              <Link to="/contact" className="text-teal-400 hover:underline mx-2">Contact Us</Link>
-              <Link to="/terms" className="text-teal-400 hover:underline mx-2">Terms of Service</Link>
-              <Link to="/privacy" className="text-teal-400 hover:underline mx-2">Privacy Policy</Link>
-            </nav>
-          </div>
-
-          {/* Social Media Links */}
-          <div className="flex justify-center space-x-6 mt-4">
-            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="text-teal-500 hover:text-white transition duration-300">
-              <i className="fab fa-facebook-f text-2xl"></i>
-            </a>
-            <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer" className="text-teal-400 hover:text-white transition duration-300">
-              <i className="fab fa-twitter text-2xl"></i>
-            </a>
-            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="text-pink-500 hover:text-white transition duration-300">
-              <i className="fab fa-instagram text-2xl"></i>
-            </a>
-            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className="text-teal-700 hover:text-white transition duration-300">
-              <i className="fab fa-linkedin-in text-2xl"></i>
-            </a>
+      <footer className="bg-teal-500 text-white text-center p-4 mt-auto">
+        <div className="container mx-auto">
+          <p>&copy; {new Date().getFullYear()} Nazarene Vehicle Rental. All rights reserved.</p>
+          <div className="flex justify-center mt-2">
+            <Link to="/" className="text-white hover:text-gray-200 mx-2">Home</Link>
+            <Link to="/about" className="text-white hover:text-gray-200 mx-2">About</Link>
+            <Link to="/contact" className="text-white hover:text-gray-200 mx-2">Contact</Link>
+            <Link to="/terms" className="text-white hover:text-gray-200 mx-2">Terms</Link>
+            <Link to="/privacy" className="text-white hover:text-gray-200 mx-2">Privacy</Link>
           </div>
         </div>
       </footer>
