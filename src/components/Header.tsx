@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
@@ -17,13 +17,14 @@ const Header = () => {
     <header className="bg-white shadow-md p-4 flex justify-between items-center w-full top-0 z-10">
       <div className="flex items-center">
         <div
-          className="h-16 w-16 bg-cover bg-center mr-2 rounded-full border-2 border-blue-500"
+          className="h-16 w-16 bg-cover bg-center mr-2 rounded-full border-2"
           style={{
             backgroundImage:
               'url("https://i.pinimg.com/236x/0a/e7/16/0ae7168109df3688316c8bfd361ccbfb.jpg")',
+            borderColor: '#007BFF', // Blue color
           }}
         ></div>
-        <div className="text-2xl font-bold text-blue-500">Nazarene Vehicle Rental</div>
+        <div className="text-2xl font-bold" style={{ color: '#007BFF' }}>Nazarene Vehicle Rental</div> {/* Blue color */}
       </div>
       <nav className={`md:flex items-center ${menuOpen ? 'block' : 'hidden'}`}>
         <Link to="/" className="text-gray-700 hover:text-blue-500 mx-2">
@@ -45,6 +46,7 @@ const Header = () => {
           <button
             onClick={toggleDropdown}
             className="flex items-center bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mx-2 focus:outline-none"
+            style={{ backgroundColor: '#007BFF' }} // Blue color
           >
             Login
             <svg
